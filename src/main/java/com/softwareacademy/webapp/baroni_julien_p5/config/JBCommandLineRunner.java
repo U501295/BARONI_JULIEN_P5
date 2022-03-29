@@ -28,10 +28,6 @@ public class JBCommandLineRunner implements InitializingBean{
 
     @Override
     public void afterPropertiesSet() {
-        //creer le bean et l'injecter en passant par la class configuration
-
-        //TypeReference<List<Person>> typeReference = new TypeReference<List<Person>>(){};
-
 
         try(InputStream inputStream = resource.getInputStream()) {
             InputData inputData = mapper.readValue(inputStream, new TypeReference<InputData>(){});
@@ -39,7 +35,7 @@ public class JBCommandLineRunner implements InitializingBean{
 
             /////////////////////////////////////////////////////////////////////////////
 
-
+            inputData.
             inputData.getPersons().forEach(e ->personService.save(e));
             //listPerson.forEach(personService::save);
             System.out.println("JSON saved into db");
