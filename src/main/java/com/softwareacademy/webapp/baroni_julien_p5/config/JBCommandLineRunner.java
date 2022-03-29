@@ -36,6 +36,10 @@ public class JBCommandLineRunner implements InitializingBean{
         try(InputStream inputStream = resource.getInputStream()) {
             InputData inputData = mapper.readValue(inputStream, new TypeReference<InputData>(){});
             System.out.println("JSON found with"+inputData.getPersons().size()+"persons");
+
+            /////////////////////////////////////////////////////////////////////////////
+
+
             inputData.getPersons().forEach(e ->personService.save(e));
             //listPerson.forEach(personService::save);
             System.out.println("JSON saved into db");

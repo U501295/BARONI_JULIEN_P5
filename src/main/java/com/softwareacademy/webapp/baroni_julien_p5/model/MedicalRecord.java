@@ -1,7 +1,6 @@
 package com.softwareacademy.webapp.baroni_julien_p5.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -24,7 +23,8 @@ public class MedicalRecord {
     @JsonProperty("lastName")
     private String lastName;
     @JsonProperty("birthdate")
-    private String birthDate ;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+    private Date birthDate ;
     @JsonProperty("medications")
     @ElementCollection
     private List<String> medications;
@@ -33,10 +33,8 @@ public class MedicalRecord {
     private List<String> allergies ;
 
 
-    //@ElementCollection
-    //private List<String> medicalRecord;
-
-    /*public Date getBirthDate() {
+    @JsonAnyGetter
+    public Date getBirthDate() {
         if (this.birthDate != null){
             Date birthDate = (Date)this.birthDate.clone();
             return birthDate;
@@ -45,6 +43,7 @@ public class MedicalRecord {
         }
     }
 
+    @JsonAnySetter
     public void setBirthDate(Date birthDate) {
         if (birthDate != null){
             if (this.birthDate == null){
@@ -55,7 +54,7 @@ public class MedicalRecord {
         }else{
             this.birthDate = null;
         }
-    }*/
+    }
 
 
 }
