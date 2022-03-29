@@ -1,30 +1,26 @@
 package com.softwareacademy.webapp.baroni_julien_p5.config;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softwareacademy.webapp.baroni_julien_p5.model.InputData;
-import com.softwareacademy.webapp.baroni_julien_p5.model.Person;
+import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.PersonService;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-
 
 
 @Component
 public class JBCommandLineRunner implements InitializingBean{
     PersonService personService;
     Resource resource;
-
+    @Autowired
+    ObjectMapper mapper;
     public JBCommandLineRunner (PersonService personService, @Value("classpath:JSON/data.json")  Resource resource){
         this.personService = personService;
         this.resource = resource;
@@ -33,7 +29,7 @@ public class JBCommandLineRunner implements InitializingBean{
     @Override
     public void afterPropertiesSet() {
         //creer le bean et l'injecter en passant par la class configuration
-        ObjectMapper mapper = new ObjectMapper();
+
         //TypeReference<List<Person>> typeReference = new TypeReference<List<Person>>(){};
 
 

@@ -19,17 +19,22 @@ public class MedicalRecord {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+    @JsonProperty("firstName")
     private String firstName;
+    @JsonProperty("lastName")
     private String lastName;
+    @JsonProperty("birthdate")
+    private String birthDate ;
+    @JsonProperty("medications")
+    @ElementCollection
+    private List<String> medications;
     @JsonProperty("allergies")
     @ElementCollection
     private List<String> allergies ;
-    @JsonProperty("birthdate")
-    private String birthDate ;
-    @ElementCollection
-    private List<String> medications;
-    @ElementCollection
-    private List<String> medicalRecord;
+
+
+    //@ElementCollection
+    //private List<String> medicalRecord;
 
     /*public Date getBirthDate() {
         if (this.birthDate != null){

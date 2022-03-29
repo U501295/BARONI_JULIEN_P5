@@ -1,5 +1,6 @@
 package com.softwareacademy.webapp.baroni_julien_p5.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -14,7 +15,9 @@ public class FireStation {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+    @JsonProperty("address")
     private String address;
+    @JsonProperty("station")
     private Integer station;
 
 
