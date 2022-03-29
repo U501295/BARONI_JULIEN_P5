@@ -1,5 +1,7 @@
 package com.softwareacademy.webapp.baroni_julien_p5.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
@@ -12,29 +14,33 @@ import java.util.List;
 
 @Entity
 @Data
-public class MedicalRecords {
+public class MedicalRecord {
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    @JsonProperty("allergies")
+    @ElementCollection
+    private List<String> allergies ;
+    @JsonProperty("birthdate")
+    private String birthDate ;
     @ElementCollection
     private List<String> medications;
     @ElementCollection
     private List<String> medicalRecord;
 
-    public Date getBirthDate() {
+    /*public Date getBirthDate() {
         if (this.birthDate != null){
-            Date inTime = (Date)this.birthDate.clone();
-            return inTime;
+            Date birthDate = (Date)this.birthDate.clone();
+            return birthDate;
         }else{
             return null;
         }
     }
 
-    public void setInTime(Date birthDate) {
+    public void setBirthDate(Date birthDate) {
         if (birthDate != null){
             if (this.birthDate == null){
                 this.birthDate = (Date)birthDate.clone();
@@ -44,7 +50,7 @@ public class MedicalRecords {
         }else{
             this.birthDate = null;
         }
-    }
+    }*/
 
 
 }

@@ -9,12 +9,12 @@ import javax.persistence.GenerationType;
 
 @Entity
 @Data
-public class FireStations {
+public class FireStation {
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    private String adress;
+    private String address;
     private Integer station;
 
 
