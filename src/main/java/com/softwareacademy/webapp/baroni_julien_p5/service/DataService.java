@@ -13,9 +13,9 @@ public class DataService {
         this.dataRepository = dataRepository;
     }
 
-    public object(Person person){
+    /*public object(Person person){
         return personRepository.save(person);
-    }
+    }*/
 
 
 }
