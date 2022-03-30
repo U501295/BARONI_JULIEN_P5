@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.model;
+package com.softwareacademy.webapp.baroni_julien_p5.model.Entities;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;

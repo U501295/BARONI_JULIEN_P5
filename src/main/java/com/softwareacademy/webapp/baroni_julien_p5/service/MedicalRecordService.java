@@ -1,7 +1,7 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
-import com.softwareacademy.webapp.baroni_julien_p5.model.MedicalRecord;
+import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 
 import org.springframework.stereotype.Service;
 
