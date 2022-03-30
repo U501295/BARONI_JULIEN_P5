@@ -8,18 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-@Entity
+
 @Data
 public class FireStation {
-    @javax.persistence.Id
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+
     @JsonProperty("address")
     private String address;
     @JsonProperty("station")
     private Integer station;
 
 
-
+    public FireStation(String address, Integer station) {
+        this.address = address;
+        this.station = station;
+    }
 }

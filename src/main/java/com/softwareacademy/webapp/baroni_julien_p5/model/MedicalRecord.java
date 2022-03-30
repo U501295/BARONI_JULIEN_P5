@@ -11,13 +11,10 @@ import javax.persistence.GenerationType;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+
 @Data
 public class MedicalRecord {
-    @javax.persistence.Id
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+
     @JsonProperty("firstName")
     private String firstName;
     @JsonProperty("lastName")
@@ -31,6 +28,14 @@ public class MedicalRecord {
     @JsonProperty("allergies")
     @ElementCollection
     private List<String> allergies ;
+
+    public MedicalRecord(String firstName, String lastName, Date birthDate, List<String> medications, List<String> allergies) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.medications = medications;
+        this.allergies = allergies;
+    }
 
 
     @JsonAnyGetter

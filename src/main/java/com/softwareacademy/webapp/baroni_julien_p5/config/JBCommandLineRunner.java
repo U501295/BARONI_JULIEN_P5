@@ -35,9 +35,7 @@ public class JBCommandLineRunner implements InitializingBean{
 
             /////////////////////////////////////////////////////////////////////////////
 
-            //inputData.
-            inputData.getPersons().forEach(e ->personService.save(e));
-            //listPerson.forEach(personService::save);
+
             System.out.println("JSON saved into db");
         }catch(IOException e){
             System.out.println("Unable to save data : " + e.getMessage());

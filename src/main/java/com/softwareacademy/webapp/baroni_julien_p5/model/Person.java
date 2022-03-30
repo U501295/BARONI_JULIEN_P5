@@ -8,13 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-@Entity
 @Data
 public class Person {
-    @javax.persistence.Id
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+
     @JsonProperty("firstName")
     private String firstName;
     @JsonProperty("lastName")
@@ -29,6 +25,20 @@ public class Person {
     private String phone;
     @JsonProperty("email")
     private String email;
+
+
+
+
+    public Person(String firstName, String lastName, String address, String city, Integer zip, String phone, String email) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.zip = zip;
+        this.phone = phone;
+        this.email = email;
+    }
 
 
 }
