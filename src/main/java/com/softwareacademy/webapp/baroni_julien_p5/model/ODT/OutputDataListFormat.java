@@ -25,14 +25,14 @@ public class OutputDataListFormat {
 
     private List<String> medicalBackGround;
 
-    private int isAChildren;
+    private Integer isAChildren;
 
-    private int isAnAdult;
+    private Integer isAnAdult;
 
 
     // pour la méthode actionsForReturnPersonsCoveredByFireStation
 
-    public OutputDataListFormat(String firstName, String lastName, String address, String phone, int isAChildren, int isAnAdult) {
+    public OutputDataListFormat(String firstName, String lastName, String address, String phone, Integer isAChildren, Integer isAnAdult) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

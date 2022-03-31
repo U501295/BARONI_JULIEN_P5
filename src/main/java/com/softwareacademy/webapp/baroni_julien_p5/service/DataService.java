@@ -21,20 +21,20 @@ public class DataService {
     OutputDataListFormat outputDataList;
     OutputDataCountFormat outputDataCount;
 
-    public List<OutputDataListFormat> returnPersonsCoveredByFireStation(Integer station){
-        List<OutputDataListFormat> output = null;
-        String fireStationAdress ;
-        inputData.getFirestations().forEach(objectTodealWith ->{
-            if (objectTodealWith.getStation().equals(station)){
-                objectTodealWith.getAddress();
+    public Integer[] countAdultsAndChildren(List<OutputDataListFormat> outputList){
+        Integer[] adultsAndChildren = new Integer[]{0,0};
+        outputList.forEach(objectToDealWith ->{
+            if (objectToDealWith.getIsAnAdult().equals(1) && objectToDealWith.getIsAChildren().equals(0)){
+                adultsAndChildren[0]+=1;
+            }else if (objectToDealWith.getIsAnAdult().equals(0) && objectToDealWith.getIsAChildren().equals(1)){
+                adultsAndChildren[1]+=1;
             }
         });
-
-        return output;
+        return adultsAndChildren;
     }
 
-    //TODO : compter les enfants et les adultes dans la fonction
-    private List<OutputDataListFormat> actionsForReturnPersonsCoveredByFireStation(Integer station){
+
+    private List<OutputDataListFormat> returnPersonsCoveredByFireStation(Integer station){
         List<OutputDataListFormat> outputList = null;
 
         for (FireStation fireStation : inputData.getFirestations()) {
