@@ -27,7 +27,9 @@ public class Person {
     private String email;
 
 
+    public Person(){
 
+    }
 
     public Person(String firstName, String lastName, String address, String city, Integer zip, String phone, String email) {
 

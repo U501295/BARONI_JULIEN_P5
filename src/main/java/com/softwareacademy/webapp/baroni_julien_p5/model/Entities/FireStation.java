@@ -17,13 +17,14 @@ public class FireStation {
     @JsonProperty("station")
     private Integer station;
 
+    public FireStation() {
+
+    }
 
     public FireStation(String address, Integer station) {
         this.address = address;
         this.station = station;
     }
 
-    public FireStation() {
 
-    }
 }

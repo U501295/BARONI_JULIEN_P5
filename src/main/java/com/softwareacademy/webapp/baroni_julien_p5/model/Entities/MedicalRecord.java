@@ -30,6 +30,10 @@ public class MedicalRecord {
     @ElementCollection
     private List<String> allergies ;
 
+    public MedicalRecord(){
+
+    }
+
     public MedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
