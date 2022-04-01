@@ -29,9 +29,12 @@ public class OutputDataListFormat {
 
     private Integer isAnAdult;
 
+    private List<String[]> houseMembers;
+
+    private Integer stationNumber;
+
 
     // pour la méthode actionsForReturnPersonsCoveredByFireStation
-
     public OutputDataListFormat(String firstName, String lastName, String address, String phone, Integer isAChildren, Integer isAnAdult) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,7 +44,25 @@ public class OutputDataListFormat {
         this.isAnAdult = isAnAdult;
     }
 
+    // pour la méthode returnChildrenAndParentsLivingAtAnAddress
+    public OutputDataListFormat(String firstName,String lastName, Integer age,List<String[]> houseMembers){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.houseMembers = houseMembers;
+    }
 
+    // pour la méthode returnPhoneListCoveredByFireStation
+    public OutputDataListFormat(String phone){
+        this.phone = phone;
+    }
 
-
+    //pour la methode returnHabitantListLivingAtAnAddress
+    public OutputDataListFormat(String lastName, String phone, Integer age, List<String> medicalBackGround, Integer stationNumber){
+        this.lastName = lastName;
+        this.phone = phone;
+        this.age = age;
+        this.medicalBackGround = medicalBackGround;
+        this.stationNumber = stationNumber;
+    }
 }

@@ -5,6 +5,7 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,12 +22,12 @@ public class MedicalRecordService {
         });
     }
 
-    public void addMedicalRecord(String firstName, String lastName, Date birthDate, List<String> medications, List<String> allergies){
+    public void addMedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies){
         medicalRecord = new MedicalRecord(firstName,lastName,birthDate,medications,allergies);
         inputData.getMedicalrecords().add(medicalRecord);
     }
 
-    public void modifyMedicalRecord(String firstName, String lastName, Date birthDate, List<String> medications, List<String> allergies) {
+    public void modifyMedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
         inputData.getMedicalrecords().forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setBirthDate(birthDate);

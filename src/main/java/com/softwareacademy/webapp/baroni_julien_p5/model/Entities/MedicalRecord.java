@@ -8,6 +8,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MedicalRecord {
     private String lastName;
     @JsonProperty("birthdate")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    private Date birthDate ;
+    private Calendar birthDate ;
     @JsonProperty("medications")
     @ElementCollection
     private List<String> medications;
@@ -29,7 +30,7 @@ public class MedicalRecord {
     @ElementCollection
     private List<String> allergies ;
 
-    public MedicalRecord(String firstName, String lastName, Date birthDate, List<String> medications, List<String> allergies) {
+    public MedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
@@ -39,9 +40,9 @@ public class MedicalRecord {
 
 
     @JsonAnyGetter
-    public Date getBirthDate() {
+    public Calendar getBirthDate() {
         if (this.birthDate != null){
-            Date birthDate = (Date)this.birthDate.clone();
+            Calendar birthDate = (Calendar) this.birthDate.clone();
             return birthDate;
         }else{
             return null;
@@ -49,10 +50,10 @@ public class MedicalRecord {
     }
 
     @JsonAnySetter
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(Calendar birthDate) {
         if (birthDate != null){
             if (this.birthDate == null){
-                this.birthDate = (Date)birthDate.clone();
+                this.birthDate = (Calendar)birthDate.clone();
             }else{
                 this.birthDate.setTime(birthDate.getTime());
             }
