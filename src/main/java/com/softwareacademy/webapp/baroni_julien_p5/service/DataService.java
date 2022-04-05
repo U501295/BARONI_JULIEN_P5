@@ -8,6 +8,7 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -31,22 +32,23 @@ public class DataService {
     }
 
 
-    public List<OutputDataListFormat> returnPersonsCoveredByFireStation(Integer station){
-        List<OutputDataListFormat> outputList = null;
-
+    public List<OutputDataListFormat> returnPersonsCoveredByFireStation(Integer station, InputData inputData){
+        List<OutputDataListFormat> outputList = new ArrayList<OutputDataListFormat>();
         for (FireStation fireStation : inputData.getFirestations()) {
             String fireStationAddress = null;
             if (fireStation.getStation().equals(station)){
                 fireStationAddress = fireStation.getAddress() ;
             }
             for (Person person : inputData.getPersons()){
-                if (fireStationAddress.equals(person.getAddress())){
+                if (fireStationAddress!=null && fireStationAddress.equals(person.getAddress())){
                     for (MedicalRecord medicalRecord : inputData.getMedicalrecords()){
                         if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
                             if (getAge(medicalRecord.getBirthDate())>18){
-                                outputList.add(new OutputDataListFormat(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone(), 0,1));
+                                OutputDataListFormat outputDataList = new OutputDataListFormat(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone(), 0,1);
+                                outputList.add(outputDataList);
                             } else if (getAge(medicalRecord.getBirthDate())<=18 && getAge(medicalRecord.getBirthDate())>=0){
-                                outputList.add(new OutputDataListFormat(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone(), 1, 0));
+                                OutputDataListFormat outputDataList = new OutputDataListFormat(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone(), 1, 0);
+                                outputList.add(outputDataList);
                             }
                         }
                     }
@@ -58,7 +60,7 @@ public class DataService {
     }
 
     public List<OutputDataListFormat> returnChildrenAndParentsLivingAtAnAddress(String address){
-        List<OutputDataListFormat> outputList = null;
+        List<OutputDataListFormat> outputList = new ArrayList<OutputDataListFormat>();
 
         for (MedicalRecord medicalRecord : inputData.getMedicalrecords()){
             String addressToMatch = "";

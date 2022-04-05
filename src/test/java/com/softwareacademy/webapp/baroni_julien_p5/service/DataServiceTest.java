@@ -7,6 +7,7 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
+import com.softwareacademy.webapp.baroni_julien_p5.model.ODT.OutputDataListFormat;
 import jdk.internal.util.xml.impl.Input;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.assertj.core.api.Assertions;
@@ -35,6 +36,10 @@ import static org.mockito.Mockito.when;
 
 class DataServiceTest {
 
+    DataService dataService = new DataService();
+    @Mock
+    @Autowired
+    InputData inputData = new InputData();
 
     @Test
     void whenGetAgeIsGivenADateFromThisYearReturnZero(){
@@ -57,50 +62,23 @@ class DataServiceTest {
 
 
     @Test
-    void returnPersonsCoveredByFireStationWhenAStationIsGiven(){
-
+    void returnPersonsCoveredByFireStationWhenAStationIsGiven() throws IOException {
+        Path path = Paths.get("src\\main\\resources\\JSON\\data.json");
+        List<String> lines = Files.readAllLines(path);
+        String jsonContent = String.join("", lines);
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("JSON\\data.json");
-
-        try{
-            InputData inputData = objectMapper.readValue(file, InputData.class);
-            String test = "endpoint1";
-        }catch(IOException e) {
-
-        }
-        String test = "endpoint2";
-
-        /*FireStation fireStation = new FireStation("",0);
-        Resource resource;
-        //"C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\
-        try (InputStream input = new FileInputStream("C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\data.json")) {
-            inputData = objectMapper.readValue(input, new TypeReference<InputData>() {
-            });
-        } catch (IOException e) {
-            //throw Exception("Error when trying to fetch ressource");
-        }
-        String test = "endpoint";*/
+        InputData result = objectMapper.readValue(jsonContent, InputData.class);
+        /*List <FireStation> mockedFireStations= result.getFirestations();
+        List <Person> mockedPersons = result.getPersons();
+        List <MedicalRecord> mockedMedicalRecords = result.getMedicalrecords();
+        InputData mockedInputdata = new InputData(mockedPersons, mockedFireStations, mockedMedicalRecords);
+        //when(inputData.getFirestations()).thenReturn(mockedFireStations);
+        //when(inputData.getPersons()).thenReturn(mockedPersons);
+        //when(inputData.getMedicalrecords()).thenReturn(mockedMedicalRecords);*/
+        List<OutputDataListFormat> outputList = dataService.returnPersonsCoveredByFireStation(3, result);
+        Assertions.assertThat(outputList).isNotEmpty();
 
     }
-        /*ObjectMapper objectMapper = new ObjectMapper();
-        try (InputStream input = new FileInputStream("JSON/data.json")) {
-            InputData inputData = mapper.readValue(input, new TypeReference<InputData>() {
-            });
-        } catch (IOException e) {
-            //throw new JsonProcessingException("Error when trying to fetch ressource");
-        }
-        List<FireStation> fs = inputData.getFirestations();
-        String test = "endpoint";
-    }*/
-     /*List<InputData> testFS = null;
-        try(InputStream inputStream = resource.getInputStream()){
-            testFS = mapper.readValue(inputStream, new TypeReference<InputData>(){});
-        }catch(IOException e){
-            //throw new JsonProcessingException("Error when trying to fetch ressource");
-        }
-
-        //when(inputData.getFirestations()).thenReturn(testFS);
-    }*/
 
     @Test
     void getPersons() throws JsonProcessingException {

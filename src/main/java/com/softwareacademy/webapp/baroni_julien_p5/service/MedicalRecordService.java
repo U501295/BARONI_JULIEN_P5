@@ -5,12 +5,14 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class MedicalRecordService {
+    //TODO : voir si les CRUDs sont en accord avec l'ordre d'appel des beans de Spring
     InputData inputData = new InputData();
     MedicalRecord medicalRecord;
 
@@ -22,12 +24,12 @@ public class MedicalRecordService {
         });
     }
 
-    public void addMedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies){
+    public void addMedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies){
         medicalRecord = new MedicalRecord(firstName,lastName,birthDate,medications,allergies);
         inputData.getMedicalrecords().add(medicalRecord);
     }
 
-    public void modifyMedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
+    public void modifyMedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies) {
         inputData.getMedicalrecords().forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setBirthDate(birthDate);

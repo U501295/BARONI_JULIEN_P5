@@ -8,6 +8,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MedicalRecord {
 
     }
 
-    public MedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
+    public MedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
