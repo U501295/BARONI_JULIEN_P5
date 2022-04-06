@@ -11,20 +11,20 @@ public class FireStationService {
     FireStation fireStation;
 
     public void removeMapping(String address, Integer station) {
-        inputData.getFirestations().forEach(objectToDealWith -> {
+        inputData.getFirestationsData().forEach(objectToDealWith -> {
             if (objectToDealWith.getAddress().equals(address)  && objectToDealWith.getStation().equals(station)) {
-                inputData.getFirestations().remove(objectToDealWith);
+                inputData.getFirestationsData().remove(objectToDealWith);
             }
         });
     }
 
     public void addMapping(String address, Integer station) {
         fireStation = new FireStation(address, station);
-        inputData.getFirestations().add(fireStation);
+        inputData.getFirestationsData().add(fireStation);
     }
 
     public void modifyMapping(String address, Integer station) {
-        inputData.getFirestations().forEach(objectToDealWith -> {
+        inputData.getFirestationsData().forEach(objectToDealWith -> {
             if (objectToDealWith.getAddress().equals(address) ) {
                 objectToDealWith.setStation(station);
             }

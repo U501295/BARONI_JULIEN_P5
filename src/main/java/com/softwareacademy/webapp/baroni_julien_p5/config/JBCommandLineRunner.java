@@ -31,7 +31,7 @@ public class JBCommandLineRunner implements InitializingBean{
 
         try(InputStream inputStream = resource.getInputStream()) {
             InputData inputData = mapper.readValue(inputStream, new TypeReference<InputData>(){});
-            System.out.println("JSON found with"+inputData.getPersons().size()+"persons");
+            System.out.println("JSON found with"+inputData.getPersonsData().size()+"persons");
 
             /////////////////////////////////////////////////////////////////////////////
 

@@ -10,20 +10,20 @@ public class PersonService {
     Person person;
 
     public void removePerson(String firstName,String lastName) {
-        inputData.getPersons().forEach(objectToDealWith -> {
+        inputData.getPersonsData().forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName)  && objectToDealWith.getLastName().equals(lastName) ) {
-                inputData.getPersons().remove(objectToDealWith);
+                inputData.getPersonsData().remove(objectToDealWith);
             }
         });
     }
 
     public void addPerson(String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
         person = new Person(firstName,lastName,address,city,zip,phone,email);
-        inputData.getPersons().add(person);
+        inputData.getPersonsData().add(person);
     }
 
     public void modifyPerson(String firstName,String lastName, String address, String city, Integer zip, String phone, String email) {
-        inputData.getPersons().forEach(objectToDealWith -> {
+        inputData.getPersonsData().forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setAddress(address);
                 objectToDealWith.setCity(city);

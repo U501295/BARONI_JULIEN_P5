@@ -17,20 +17,20 @@ public class MedicalRecordService {
     MedicalRecord medicalRecord;
 
     public void removeMedicalRecord(String firstName,String lastName) {
-        inputData.getMedicalrecords().forEach(objectToDealWith -> {
+        inputData.getMedicalrecordsData().forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
-                inputData.getMedicalrecords().remove(objectToDealWith);
+                inputData.getMedicalrecordsData().remove(objectToDealWith);
             }
         });
     }
 
     public void addMedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies){
         medicalRecord = new MedicalRecord(firstName,lastName,birthDate,medications,allergies);
-        inputData.getMedicalrecords().add(medicalRecord);
+        inputData.getMedicalrecordsData().add(medicalRecord);
     }
 
     public void modifyMedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies) {
-        inputData.getMedicalrecords().forEach(objectToDealWith -> {
+        inputData.getMedicalrecordsData().forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setBirthDate(birthDate);
                 objectToDealWith.setMedications(medications);
