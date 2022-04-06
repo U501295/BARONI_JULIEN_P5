@@ -22,6 +22,7 @@ import org.springframework.boot.json.JsonParser;
 import org.springframework.core.io.Resource;
 import org.json.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -63,85 +64,38 @@ class DataServiceTest {
 
     @Test
     void returnPersonsCoveredByFireStationWhenAStationIsGiven() throws IOException {
-        Path path = Paths.get("src\\main\\resources\\JSON\\data.json");
-        List<String> lines = Files.readAllLines(path);
-        String jsonContent = String.join("", lines);
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputData result = objectMapper.readValue(jsonContent, InputData.class);
-        /*List <FireStation> mockedFireStations= result.getFirestations();
-        List <Person> mockedPersons = result.getPersons();
-        List <MedicalRecord> mockedMedicalRecords = result.getMedicalrecords();
-        InputData mockedInputdata = new InputData(mockedPersons, mockedFireStations, mockedMedicalRecords);
-        //when(inputData.getFirestations()).thenReturn(mockedFireStations);
-        //when(inputData.getPersons()).thenReturn(mockedPersons);
-        //when(inputData.getMedicalrecords()).thenReturn(mockedMedicalRecords);*/
-        List<OutputDataListFormat> outputList = dataService.returnPersonsCoveredByFireStation(3, result);
+        List<OutputDataListFormat> outputList = dataService.returnPersonsCoveredByFireStation(3);
         Assertions.assertThat(outputList).isNotEmpty();
 
     }
 
     @Test
-    void getPersons() throws JsonProcessingException {
-        List<Person> listOfPersons = new ArrayList<Person>(){};
-        String jsonPerson = "{\"firstName\":\"John\", \"lastName\":\"Boyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\"}" ;
-
-
-
-                //String path = "C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\persons.json";
-                //byte[] jsonData = Files.readAllLines(Paths.get(path));
-                ObjectMapper objectMapper = new ObjectMapper();
-                Person person = objectMapper.readValue(jsonPerson,Person.class);
-                Assertions.assertThat(person.getFirstName()).isEqualTo("John");
-
-                //File file = new File("C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\persons.json");
-                String test = "endpoint";
-
-
+    void countAdultsAndChildrenWhenIsGivenPersons(){
+        List<OutputDataListFormat> mockOutputList = new ArrayList<OutputDataListFormat>();
+        OutputDataListFormat mockedAdultOne = new OutputDataListFormat("JASON", "Statam", "Himalaya Street", "07654367", 0,1);
+        OutputDataListFormat mockedChildrenOne = new OutputDataListFormat("Baby", "Bell", "Himalaya Street", "07654367", 1,0);
+        OutputDataListFormat mockedChildrenTwo = new OutputDataListFormat("Bell", "Baby", "Himalaya Street", "07654367", 1,0);
+        mockOutputList.add(mockedAdultOne);
+        mockOutputList.add(mockedChildrenOne);
+        mockOutputList.add(mockedChildrenTwo);
+        Integer[] result = dataService.countAdultsAndChildren(mockOutputList);
+        Integer numberOfAdults = result[0];
+        Integer numberOfChildren = result[1];
+        Assertions.assertThat(numberOfChildren).isEqualTo(2);
+        Assertions.assertThat(numberOfAdults).isEqualTo(1);
     }
 
     @Test
-    void parseMedicalRecord() throws JsonProcessingException {
-        List<Person> listOfPersons = new ArrayList<Person>(){};
-        String json = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }" ;
-
-
-
-        //String path = "C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\persons.json";
-        //byte[] jsonData = Files.readAllLines(Paths.get(path));
-        ObjectMapper objectMapper = new ObjectMapper();
-        MedicalRecord result = objectMapper.readValue(json, MedicalRecord.class);
-        Assertions.assertThat(result.getAllergies()).isNotEmpty();
-        Assertions.assertThat(result.getAllergies().size()).isEqualTo(3);
-
-        //File file = new File("C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\persons.json");
-        String test = "endpoint";
-
-
+    void getMembersLivingAtAnAdress(){
+        List<String[]> houseMembers = dataService.getHouseMembers("1509 Culver St");
+        Assertions.assertThat(houseMembers.size()).isEqualTo(5);
     }
 
     @Test
-    void parseData() throws IOException {
-        List<Person> listOfPersons = new ArrayList<Person>(){};
-        Path path = Paths.get("src\\main\\resources\\JSON\\persons.json");
-        //String json = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }" ;
-        List<String> lines = Files.readAllLines(path);
-        String jsonContent = String.join("", lines);
-
-
-        //String path = "C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\persons.json";
-        //byte[] jsonData = Files.readAllLines(Paths.get(path));
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputData result = objectMapper.readValue(jsonContent, InputData.class);
-        Assertions.assertThat(result.getPersons().size()).isEqualTo(23);
-        //Assertions.assertThat(result.getPersons().get(4));
-        //Assertions.assertThat(result.getAllergies().size()).isEqualTo(3);
-
-        //File file = new File("C:\\JBA\\methodo_dev\\SOFTWARE ACADEMY\\Projet_5\\BARONI_JULIEN_P5\\src\\main\\resources\\JSON\\persons.json");
-        String test = "endpoint";
-
-
+    void getPhoneNumberOfMembersFromAnAdress(){
+        List<OutputDataListFormat> outputList = dataService.returnPhoneListCoveredByFireStation(11);
+        Assertions.assertThat(outputList.size()).isEqualTo(5);
     }
-
 
 
 }

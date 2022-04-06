@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class MedicalRecordService {
-    //TODO : voir si les CRUDs sont en accord avec l'ordre d'appel des beans de Spring
+    //TODO : voir si les CRUDs sont en accord avec l'ordre d'appel des beans de Spring. Voir si besoin d'une liste en paramètre d'entrée.
     InputData inputData = new InputData();
     MedicalRecord medicalRecord;
 

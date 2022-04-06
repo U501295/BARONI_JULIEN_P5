@@ -57,22 +57,14 @@ class JSONReadTest {
 
     @Test
     void parseFireStationList() throws IOException {
-        Path path = Paths.get("src\\main\\resources\\JSON\\data.json");
-        List<String> lines = Files.readAllLines(path);
-        String jsonContent = String.join("", lines);
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputData result = objectMapper.readValue(jsonContent, InputData.class);
+        InputData result = InputData.getJsonData();
         Assertions.assertThat(result.getFirestations()).isNotEmpty();
         Assertions.assertThat(result.getFirestations().get(4).getAddress()).isEqualTo("748 Townings Dr");
     }
-    
+
     @Test
     void parsePersonsList() throws IOException {
-        Path path = Paths.get("src\\main\\resources\\JSON\\data.json");
-        List<String> lines = Files.readAllLines(path);
-        String jsonContent = String.join("", lines);
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputData result = objectMapper.readValue(jsonContent, InputData.class);
+        InputData result = InputData.getJsonData();
         Assertions.assertThat(result.getPersons()).isNotEmpty();
         Assertions.assertThat(result.getPersons().get(4).getFirstName()).isEqualTo("Felicia");
     }
@@ -91,14 +83,15 @@ class JSONReadTest {
         Assertions.assertThat(medications.get(0)).isEqualTo("tetracyclaz:650mg");
     }
 
+    @Test
+    void getJsonData() {
+        InputData result = InputData.getJsonData();
+        Assertions.assertThat(result.getClass()).isNotNull();
+    }
 
     @Test
     void parseDataIntoLists() throws IOException {
-        Path path = Paths.get("src\\main\\resources\\JSON\\data.json");
-        List<String> lines = Files.readAllLines(path);
-        String jsonContent = String.join("", lines);
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputData result = objectMapper.readValue(jsonContent, InputData.class);
+        InputData result = InputData.getJsonData();
         Assertions.assertThat(result.getPersons().size()).isEqualTo(23);
         Assertions.assertThat(result.getFirestations().size()).isEqualTo(13);
         Assertions.assertThat(result.getMedicalrecords().size()).isEqualTo(23);

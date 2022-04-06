@@ -14,7 +14,6 @@ import java.util.List;
 
 @Service
 public class DataService {
-    InputData inputData = new InputData();
     MedicalRecord medicalRecord;
     Person person;
     OutputDataListFormat outputDataList;
@@ -32,16 +31,17 @@ public class DataService {
     }
 
 
-    public List<OutputDataListFormat> returnPersonsCoveredByFireStation(Integer station, InputData inputData){
+    public List<OutputDataListFormat> returnPersonsCoveredByFireStation(Integer station){
         List<OutputDataListFormat> outputList = new ArrayList<OutputDataListFormat>();
-        for (FireStation fireStation : inputData.getFirestations()) {
+        InputData jsonData = InputData.getJsonData();
+        for (FireStation fireStation : jsonData.getFirestations()) {
             String fireStationAddress = null;
             if (fireStation.getStation().equals(station)){
                 fireStationAddress = fireStation.getAddress() ;
             }
-            for (Person person : inputData.getPersons()){
+            for (Person person : jsonData.getPersons()){
                 if (fireStationAddress!=null && fireStationAddress.equals(person.getAddress())){
-                    for (MedicalRecord medicalRecord : inputData.getMedicalrecords()){
+                    for (MedicalRecord medicalRecord : jsonData.getMedicalrecords()){
                         if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
                             if (getAge(medicalRecord.getBirthDate())>18){
                                 OutputDataListFormat outputDataList = new OutputDataListFormat(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone(), 0,1);
@@ -61,11 +61,11 @@ public class DataService {
 
     public List<OutputDataListFormat> returnChildrenAndParentsLivingAtAnAddress(String address){
         List<OutputDataListFormat> outputList = new ArrayList<OutputDataListFormat>();
-
-        for (MedicalRecord medicalRecord : inputData.getMedicalrecords()){
+        InputData jsonData = InputData.getJsonData();
+        for (MedicalRecord medicalRecord : jsonData.getMedicalrecords()){
             String addressToMatch = "";
             if (getAge(medicalRecord.getBirthDate())<=18){
-                for (Person person : inputData.getPersons()){
+                for (Person person : jsonData.getPersons()){
                     if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
                         addressToMatch = person.getAddress();
                         outputList.add(new OutputDataListFormat(person.getFirstName(), person.getLastName(),getAge(medicalRecord.getBirthDate()), getHouseMembers(addressToMatch)));
@@ -78,8 +78,9 @@ public class DataService {
     }
 
     public List<String[]> getHouseMembers(String address){
-        List<String[]> houseMembers = null;
-        for(Person person : inputData.getPersons()){
+        List<String[]> houseMembers = new ArrayList<String[]>();
+        InputData jsonData = InputData.getJsonData();
+        for(Person person : jsonData.getPersons()){
             String[] houseMember = new String[]{"",""};
             if (person.getAddress().equals(address)){
                 houseMember[0] = person.getFirstName();
@@ -91,14 +92,15 @@ public class DataService {
     }
 
     public List<OutputDataListFormat> returnPhoneListCoveredByFireStation(Integer station){
-        List<OutputDataListFormat> outputList = null;
-        for (FireStation fireStation : inputData.getFirestations()) {
+        List<OutputDataListFormat> outputList = new ArrayList<OutputDataListFormat>();
+        InputData jsonData = InputData.getJsonData();
+        for (FireStation fireStation : jsonData.getFirestations()) {
             String fireStationAddress = null;
             if (fireStation.getStation().equals(station)) {
                 fireStationAddress = fireStation.getAddress();
             }
-            for (Person person : inputData.getPersons()){
-                if (fireStationAddress.equals(person.getAddress())){
+            for (Person person : jsonData.getPersons()){
+                if (fireStationAddress!=null && fireStationAddress.equals(person.getAddress())){
                     outputList.add(new OutputDataListFormat(person.getPhone()));
                 }
             }
