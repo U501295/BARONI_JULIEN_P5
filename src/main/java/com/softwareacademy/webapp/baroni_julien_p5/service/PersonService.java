@@ -1,9 +1,11 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
+
+import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
-import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,27 +13,28 @@ import java.util.List;
 public class PersonService {
     Person person;
 
-    public List<Person> removePerson(String firstName, String lastName) {
-        List<Person> persons = InputData.INSTANCE.getPersonsData();
+    public List<Person> removePerson(List<Person> persons, String firstName, String lastName) {
+        List<Person> output = new ArrayList<>();
         Iterator<Person> itr = persons.iterator();
         while (itr.hasNext()) {
             Person iteratedPerson = itr.next();
             if (iteratedPerson.getFirstName().equals(firstName)  && iteratedPerson.getLastName().equals(lastName) ) {
                 itr.remove();
+            }else{
+                output.add(iteratedPerson);
             }
         }
-        return persons;
+        return output;
     }
 
-    public List<Person> addPerson(String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
-        List<Person> persons = InputData.INSTANCE.getPersonsData();
+    public List<Person> addPerson(List<Person> persons,String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
+        List<Person> output = persons;
         person = new Person(firstName,lastName,address,city,zip,phone,email);
-       persons.add(person);
-       return persons;
+        output.add(person);
+        return output;
     }
 
-    public List<Person> modifyPerson(String firstName,String lastName, String address, String city, Integer zip, String phone, String email) {
-        List<Person> persons = InputData.INSTANCE.getPersonsData();
+    public List<Person> modifyPerson(List<Person> persons,String firstName,String lastName, String address, String city, Integer zip, String phone, String email) {
        persons.forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setAddress(address);
@@ -41,7 +44,8 @@ public class PersonService {
                 objectToDealWith.setEmail(email);
             }
         });
-        return persons;
+       List<Person> output = persons;
+        return output;
     }
 
 

@@ -2,6 +2,7 @@ package com.softwareacademy.webapp.baroni_julien_p5.controller;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,17 +14,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class FunctionnalController {
-    DataService dataService = new DataService();
+    @Autowired
+    DataService dataService;
 
     @GetMapping("firestation")
     public FireStationACCountDTO getPersonsCoveredByFireStation(@RequestParam(value="stationNumber", required=true) Integer stationNumber) {
         FireStationACCountDTO fireStationACCountDTO = new FireStationACCountDTO();
-
         fireStationACCountDTO.setCoveredPersons(dataService.returnPersonsCoveredByFireStation(stationNumber));
         fireStationACCountDTO.setNumberOfAdults(dataService.countAdultsAndChildren(stationNumber).get(0));
         fireStationACCountDTO.setNumberOfChildren(dataService.countAdultsAndChildren(stationNumber).get(1));
-
-
         return fireStationACCountDTO;
     }
 
@@ -47,7 +46,7 @@ public class FunctionnalController {
 
     //TODO : voir pourquoi on a quand même un affichage quand on rentre aucun paramètre
     @GetMapping("fire")
-    public FireAndFireStationNumberDTO getPersonsLivingAtGivenAddress(@RequestParam(value="address", required=true) String address) {
+    public FireAndFireStationNumberDTO getPersonsAndAddressesCoveredByFireStationDuringFlood(@RequestParam(value="address", required=true) String address) {
         FireAndFireStationNumberDTO fireAndFireStationNumberDTO = new FireAndFireStationNumberDTO();
         fireAndFireStationNumberDTO.setPersonsLivingAtTheGivenAddress(dataService.returnHabitantsListLivingAtAnAddress(address));
         fireAndFireStationNumberDTO.setFireStationNumber(dataService.returnFireStationNumberCoveringTheAddress(address));
@@ -55,7 +54,7 @@ public class FunctionnalController {
     }
 
     @GetMapping("flood/stations")
-    public FloodDTO getPersonsLivingAtGivenAddress(@RequestParam List<Integer> stations) {
+    public FloodDTO getPersonsAndAddressesCoveredByFireStationDuringFlood(@RequestParam List<Integer> stations) {
         FloodDTO floodDTO = new FloodDTO();
         floodDTO.setFlood(dataService.returnPersonsAndAdressCoveredByFireStationsDuringFlood(stations));
         return floodDTO;

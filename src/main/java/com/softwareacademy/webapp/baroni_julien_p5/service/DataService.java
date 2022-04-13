@@ -14,8 +14,6 @@ import java.util.*;
 
 @Service
 public class DataService {
-    MedicalRecord medicalRecord;
-    Person person;
 
     public List<Integer> countAdultsAndChildren(Integer station){
         List<Integer> AdultsAndChildren= new ArrayList<>();

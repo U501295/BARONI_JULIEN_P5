@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.service;
+package com.softwareacademy.webapp.baroni_julien_p5.unitaires.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -67,8 +67,6 @@ class JSONReadTest {
         String jsonContent = String.join("", lines);
         JSONObject jsonObject = new JSONObject(jsonContent);
         JSONArray jsonArray = jsonObject.getJSONArray("medicalrecords");
-        //TODO : voir pourquoi on arrive pas à faire rentrer le JSONObject dans le formalisme de MedicalRecord
-        //MedicalRecord mc = (MedicalRecord) jsonArray.getJSONObject(4);
         JSONObject medicalRecord =jsonArray.getJSONObject(4);
         JSONArray medications = (JSONArray) medicalRecord.get("medications");
         Assertions.assertThat(medications.get(0)).isEqualTo("tetracyclaz:650mg");

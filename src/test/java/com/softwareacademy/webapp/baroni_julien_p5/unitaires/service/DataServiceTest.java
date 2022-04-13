@@ -1,7 +1,8 @@
-package com.softwareacademy.webapp.baroni_julien_p5.service;
+package com.softwareacademy.webapp.baroni_julien_p5.unitaires.service;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
 import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
+import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,9 +14,6 @@ import java.util.*;
 class DataServiceTest {
 
     DataService dataService = new DataService();
-    @Mock
-    @Autowired
-    InputData inputData = new InputData();
 
     @Test
     void whenGetAgeIsGivenADateFromThisYearReturnZero(){
@@ -35,7 +33,6 @@ class DataServiceTest {
         Integer expectedAge = 22;
         Assertions.assertThat(resultAge).isEqualTo(expectedAge);
     }
-
 
     @Test
     void returnPersonsCoveredByFireStationWhenAStationIsGiven() throws IOException {
@@ -73,16 +70,7 @@ class DataServiceTest {
         List<FireDTO> outputList = dataService.returnHabitantsListLivingAtAnAddress("1509 Culver St");
         Assertions.assertThat(outputList.size()).isEqualTo(5);
     }
-/*
-    @Test
-    void returnPersonsCoveredByFireStationsDuringFlood(){
-        List<Integer> stationsNumbers = new ArrayList<>();
-        stationsNumbers.add(1);
-        stationsNumbers.add(2);
-        List <FloodPersonsDTO> outputList = dataService.returnPersonsCoveredByFireStationsDuringFlood(stationsNumbers);
-        Assertions.assertThat(outputList.size()).isEqualTo(11);
-    }
-*/
+
     //TODO : voir pourquoi il y a des doublons
     @Test
     void returnPersonsAndAdressCoveredByFireStationsDuringFlood(){
@@ -90,7 +78,7 @@ class DataServiceTest {
         stationsNumbers.add(1);
         stationsNumbers.add(2);
         List <FloodPersonsAndAdressDTO> outputList = dataService.returnPersonsAndAdressCoveredByFireStationsDuringFlood(stationsNumbers);
-        Assertions.assertThat(outputList.size()).isEqualTo(2);
+        Assertions.assertThat(outputList.size()).isEqualTo(6);
     }
 
 

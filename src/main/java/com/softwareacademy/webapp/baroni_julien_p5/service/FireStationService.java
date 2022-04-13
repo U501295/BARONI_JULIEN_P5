@@ -1,9 +1,11 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
+
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
-import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
+import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,34 +14,36 @@ public class FireStationService {
 
     FireStation fireStation;
 
-    public List<FireStation> removeMapping(String address, Integer station) {
-        List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
+    public List<FireStation> removeMapping(List<FireStation> fireStations, String address, Integer station) {
+        List<FireStation> output = new ArrayList<>();
         Iterator<FireStation> itr = fireStations.iterator();
         while (itr.hasNext()) {
             FireStation iteratedFireStation = itr.next();
             if (iteratedFireStation.getAddress().equals(address)  && iteratedFireStation.getStation().equals(station)) {
                 itr.remove();
+            }else{
+                output.add(iteratedFireStation);
             }
         }
-        return fireStations;
+        return output;
     }
 
 
-    public List<FireStation> addMapping(String address, Integer station) {
-        List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
+    public List<FireStation> addMapping(List<FireStation> fireStations,String address, Integer station) {
+        List<FireStation> output = fireStations;
         fireStation = new FireStation(address, station);
-        fireStations.add(fireStation);
-        return fireStations;
+        output.add(fireStation);
+        return output;
     }
 
-    public List<FireStation> modifyMapping(String address, Integer station) {
-        List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
+    public List<FireStation> modifyMapping(List<FireStation> fireStations,String address, Integer station) {
         fireStations.forEach(objectToDealWith -> {
             if (objectToDealWith.getAddress().equals(address) ) {
                 objectToDealWith.setStation(station);
             }
 
         });
-        return fireStations;
+        List<FireStation> output = fireStations;
+        return output;
     }
 }

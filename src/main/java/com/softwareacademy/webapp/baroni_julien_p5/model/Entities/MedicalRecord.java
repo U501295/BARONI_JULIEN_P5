@@ -44,7 +44,6 @@ public class MedicalRecord {
     }
 
 
-    @JsonAnyGetter
     public Calendar getBirthDate() {
         if (this.birthDate != null){
             Calendar birthDate = (Calendar) this.birthDate.clone();
@@ -54,7 +53,7 @@ public class MedicalRecord {
         }
     }
 
-    @JsonAnySetter
+
     public void setBirthDate(Calendar birthDate) {
         if (birthDate != null){
             if (this.birthDate == null){
@@ -66,6 +65,8 @@ public class MedicalRecord {
             this.birthDate = null;
         }
     }
+
+
 
 
 }

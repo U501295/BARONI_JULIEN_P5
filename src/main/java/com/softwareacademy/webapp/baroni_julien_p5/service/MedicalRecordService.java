@@ -1,8 +1,9 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
+
+import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 
-import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,27 +13,30 @@ public class MedicalRecordService {
 
     MedicalRecord medicalRecord;
 
-    public List<MedicalRecord> removeMedicalRecord(String firstName,String lastName) {
-        List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
+    public List<MedicalRecord> removeMedicalRecord(List<MedicalRecord> medicalRecords,String firstName,String lastName) {
+        List<MedicalRecord> output = new ArrayList<>();
         Iterator<MedicalRecord> itr = medicalRecords.iterator();
         while (itr.hasNext()) {
             MedicalRecord iteratedMedicalRecord = itr.next();
             if (iteratedMedicalRecord.getFirstName().equals(firstName)  && iteratedMedicalRecord.getLastName().equals(lastName) ) {
                 itr.remove();
+            }else{
+                output.add(iteratedMedicalRecord);
             }
+
         }
-        return medicalRecords;
+        return output;
     }
 
-    public List<MedicalRecord> addMedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies){
-        List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
+    public List<MedicalRecord> addMedicalRecord(List<MedicalRecord> medicalRecords,String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies){
+        List<MedicalRecord> output = medicalRecords;
         medicalRecord = new MedicalRecord(firstName,lastName,birthDate,medications,allergies);
-        medicalRecords.add(medicalRecord);
-        return medicalRecords;
+       output.add(medicalRecord);
+       return output;
     }
 
-    public List<MedicalRecord> modifyMedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
-        List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
+    public List<MedicalRecord> modifyMedicalRecord(List<MedicalRecord> medicalRecords,String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
+
         medicalRecords.forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setBirthDate(birthDate);
@@ -40,7 +44,9 @@ public class MedicalRecordService {
                 objectToDealWith.setAllergies(allergies);
             }
         });
-        return medicalRecords;
+        List<MedicalRecord> output = medicalRecords;
+        return output;
+
     }
 
 }

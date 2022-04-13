@@ -2,6 +2,7 @@ package com.softwareacademy.webapp.baroni_julien_p5.controller;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.MedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,30 +17,24 @@ public class MedicalRecordController {
 
     private MedicalRecordService medicalRecordService = new MedicalRecordService();
 
-    @RequestMapping(value = "medicalRecord/",
-            method = RequestMethod.DELETE,
-            produces = { MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<MedicalRecord> deletePerson(@RequestParam String firstName, String lastName){
-        return medicalRecordService.removeMedicalRecord(firstName, lastName);
+    @DeleteMapping(value = "medicalRecord/{firstName}&{lastName}")
+    public List<MedicalRecord> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
+        List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
+        return medicalRecordService.removeMedicalRecord(medicalRecords, firstName, lastName);
 
     }
 
-    @RequestMapping(value = "medicalRecord/",
-            method = RequestMethod.POST,
-            produces = { MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<MedicalRecord> postPerson(@RequestParam String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies){
-        return medicalRecordService.addMedicalRecord(firstName,lastName,birthDate,medications,allergies);
+    @PostMapping(value = "medicalRecord/{firstName}&{lastName}")
+    public List<MedicalRecord> postPerson(@PathVariable String firstName, @PathVariable String lastName, @RequestBody MedicalRecord medicalRecord) {
+        List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
+        return medicalRecordService.addMedicalRecord(medicalRecords, firstName, lastName, medicalRecord.getBirthDate(), medicalRecord.getMedications(), medicalRecord.getAllergies());
 
     }
 
-    @RequestMapping(value = "medicalRecord/",
-            method = RequestMethod.PUT,
-            produces = { MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<MedicalRecord> modifyPerson(@RequestParam String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies){
-        return medicalRecordService.modifyMedicalRecord(firstName,lastName,birthDate,medications,allergies);
+    @PutMapping(value = "medicalRecord/{firstName}&{lastName}")
+    public List<MedicalRecord> modifyPerson(@PathVariable String firstName, @PathVariable String lastName, @RequestBody MedicalRecord medicalRecord) {
+        List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
+        return medicalRecordService.modifyMedicalRecord(medicalRecords, firstName, lastName, medicalRecord.getBirthDate(), medicalRecord.getMedications(), medicalRecord.getAllergies());
 
     }
 

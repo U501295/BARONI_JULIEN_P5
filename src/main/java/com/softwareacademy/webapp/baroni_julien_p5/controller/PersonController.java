@@ -2,11 +2,13 @@ package com.softwareacademy.webapp.baroni_julien_p5.controller;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.PersonService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/")
 public class PersonController {
@@ -14,30 +16,25 @@ public class PersonController {
     PersonService personService = new PersonService();
 
 
-    @RequestMapping(value = "person/",
-            method = RequestMethod.DELETE,
-            produces = { MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<Person> deletePerson(@RequestParam String firstName, String lastName){
-        return personService.removePerson(firstName, lastName);
+    @DeleteMapping(value = "person/{firstName}&{lastName}")
+    public List<Person> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
+        return personService.removePerson(persons, firstName, lastName);
 
     }
 
-    @RequestMapping(value = "person/",
-            method = RequestMethod.POST,
-            produces = { MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<Person> postPerson(@RequestParam String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
-        return personService.addPerson(firstName,lastName,address,city,zip,phone,email);
+    @PostMapping(value = "person/{firstName}&{lastName}")
+    public List<Person> postPerson(@PathVariable String firstName, @PathVariable String lastName, @RequestBody Person person) {
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
+        return personService.addPerson(persons, firstName, lastName, person.getAddress(), person.getCity(), person.getZip(), person.getPhone(), person.getEmail());
 
     }
 
-    @RequestMapping(value = "person/",
-            method = RequestMethod.PUT,
-            produces = { MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<Person> modifyPerson(@RequestParam String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
-        return personService.modifyPerson(firstName,lastName,address,city,zip,phone,email);
+
+    @PutMapping(value = "person/{firstName}&{lastName}")
+    public List<Person> modifyPerson(@PathVariable String firstName, @PathVariable String lastName, @RequestBody Person person) {
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
+        return personService.modifyPerson(persons, firstName, lastName, person.getAddress(), person.getCity(), person.getZip(), person.getPhone(), person.getEmail());
 
     }
 }
