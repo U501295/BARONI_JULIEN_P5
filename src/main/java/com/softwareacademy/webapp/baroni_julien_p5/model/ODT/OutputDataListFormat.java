@@ -23,7 +23,9 @@ public class OutputDataListFormat {
 
     private Integer age;
 
-    private List<String> medicalBackGround;
+    private List<String> medications;
+
+    private List<String> allergies;
 
     private Integer isAChildren;
 
@@ -45,24 +47,52 @@ public class OutputDataListFormat {
     }
 
     // pour la méthode returnChildrenAndParentsLivingAtAnAddress
-    public OutputDataListFormat(String firstName,String lastName, Integer age,List<String[]> houseMembers){
+    public OutputDataListFormat(String firstName, String lastName, Integer age, List<String[]> houseMembers) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.houseMembers = houseMembers;
     }
 
-    // pour la méthode returnPhoneListCoveredByFireStation
-    public OutputDataListFormat(String phone){
+    // pour la méthode returnPhoneListCoveredByFireStation et returnUnhabitantsEmails
+    public OutputDataListFormat(String phone,String email) {
         this.phone = phone;
+        this.email = email;
     }
 
+
     //pour la methode returnHabitantListLivingAtAnAddress
-    public OutputDataListFormat(String lastName, String phone, Integer age, List<String> medicalBackGround, Integer stationNumber){
+    public OutputDataListFormat(String firstName, String lastName, String phone, Integer age, List<String> medications, List<String> allergies, Integer stationNumber) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.age = age;
-        this.medicalBackGround = medicalBackGround;
+        this.medications = medications;
+        this.allergies = allergies;
         this.stationNumber = stationNumber;
+    }
+
+    //pour la methode returnHomesCoveredByFireStationsDuringFlood
+    public OutputDataListFormat(String firstName, String lastName, String phone, Integer age, List<String> medications, List<String> allergies, String address, Integer stationNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.age = age;
+        this.medications = medications;
+        this.allergies = allergies;
+        this.address = address;
+        this.stationNumber = stationNumber;
+    }
+
+    //pour la methode returnPersonInfos
+    public OutputDataListFormat(String firstName, String lastName, String address, Integer age, String email, List<String> medications, List<String> allergies) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+        this.age = age;
+        this.medications = medications;
+        this.allergies = allergies;
+
     }
 }

@@ -93,9 +93,54 @@ class DataServiceTest {
 
     @Test
     void getPhoneNumberOfMembersFromAnAdress(){
-        List<OutputDataListFormat> outputList = dataService.returnPhoneListCoveredByFireStation(11);
+        List<OutputDataListFormat> outputList = dataService.returnPhoneListCoveredByFireStation(3);
+        Assertions.assertThat(outputList.size()).isEqualTo(11);
+    }
+
+    @Test
+    void returnHabitantsListLivingAtAnAddressWithOneUnhabitant(){
+        List<OutputDataListFormat> outputList = dataService.returnHabitantsListLivingAtAnAddress("834 Binoc Ave");
+        Assertions.assertThat(outputList.size()).isEqualTo(1);
+    }
+
+    @Test
+    void returnHabitantsListLivingAtAnAddressWithMultipleUnhabitants(){
+        List<OutputDataListFormat> outputList = dataService.returnHabitantsListLivingAtAnAddress("1509 Culver St");
         Assertions.assertThat(outputList.size()).isEqualTo(5);
     }
+
+    @Test
+    void returnHomesCoveredByFireStationsDuringFlood(){
+        List<Integer> stationsNumbers = new ArrayList<>();
+        stationsNumbers.add(1);
+        stationsNumbers.add(2);
+        List<List <OutputDataListFormat>> outputList = dataService.returnHomesCoveredByFireStationsDuringFlood(stationsNumbers);
+        Assertions.assertThat(outputList.size()).isEqualTo(2);
+    }
+
+    @Test
+    void returnPersonInfos(){
+        OutputDataListFormat personInfos = dataService.returnPersonInfos("Kendrik", "Stelzer");
+        Assertions.assertThat(personInfos).isNotNull();
+        Assertions.assertThat(personInfos.getAge()).isEqualTo(8);
+    }
+
+    @Test
+    void returnCityUnhabitantsEmailWithNonExistingCity(){
+        List<OutputDataListFormat> outputList = dataService.returnCityUnhabitantsEmail("City");
+        Assertions.assertThat(outputList).isEmpty();
+    }
+
+    @Test
+    void returnCityUnhabitantsEmailWithExistingCity(){
+        List<OutputDataListFormat> outputList = dataService.returnCityUnhabitantsEmail("Culver");
+        Assertions.assertThat(outputList).isNotEmpty();
+    }
+
+
+
+
+
 
 
 }

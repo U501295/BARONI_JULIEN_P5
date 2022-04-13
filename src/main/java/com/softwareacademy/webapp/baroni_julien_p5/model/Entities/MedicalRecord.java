@@ -35,7 +35,7 @@ public class MedicalRecord {
 
     }
 
-    public MedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies) {
+    public MedicalRecord(String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;

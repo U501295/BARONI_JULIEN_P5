@@ -1,36 +1,35 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
+import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MedicalRecordService {
-    //TODO : voir si les CRUDs sont en accord avec l'ordre d'appel des beans de Spring. Voir si besoin d'une liste en paramètre d'entrée.
-    InputData inputData = new InputData();
+
     MedicalRecord medicalRecord;
 
-    public void removeMedicalRecord(String firstName,String lastName) {
-        inputData.getMedicalrecordsData().forEach(objectToDealWith -> {
-            if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
-                inputData.getMedicalrecordsData().remove(objectToDealWith);
+    public void removeMedicalRecord(List<MedicalRecord> medicalRecords,String firstName,String lastName) {
+        Iterator<MedicalRecord> itr = medicalRecords.iterator();
+        while (itr.hasNext()) {
+            MedicalRecord iteratedMedicalRecord = itr.next();
+            if (iteratedMedicalRecord.getFirstName().equals(firstName)  && iteratedMedicalRecord.getLastName().equals(lastName) ) {
+                itr.remove();
             }
-        });
+        }
     }
 
-    public void addMedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies){
+    public void addMedicalRecord(List<MedicalRecord> medicalRecords,String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies){
         medicalRecord = new MedicalRecord(firstName,lastName,birthDate,medications,allergies);
-        inputData.getMedicalrecordsData().add(medicalRecord);
+        medicalRecords.add(medicalRecord);
     }
 
-    public void modifyMedicalRecord(String firstName, String lastName, Calendar birthDate, ArrayList<String> medications, ArrayList<String> allergies) {
-        inputData.getMedicalrecordsData().forEach(objectToDealWith -> {
+    public void modifyMedicalRecord(List<MedicalRecord> medicalRecords,String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
+        medicalRecords.forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setBirthDate(birthDate);
                 objectToDealWith.setMedications(medications);

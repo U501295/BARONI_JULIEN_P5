@@ -4,27 +4,32 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+import java.util.List;
+
 @Service
 public class FireStationService {
 
-    InputData inputData = new InputData();
     FireStation fireStation;
 
-    public void removeMapping(String address, Integer station) {
-        inputData.getFirestationsData().forEach(objectToDealWith -> {
-            if (objectToDealWith.getAddress().equals(address)  && objectToDealWith.getStation().equals(station)) {
-                inputData.getFirestationsData().remove(objectToDealWith);
+    public void removeMapping(List<FireStation> fireStations, String address, Integer station) {
+        Iterator<FireStation> itr = fireStations.iterator();
+        while (itr.hasNext()) {
+            FireStation iteratedFireStation = itr.next();
+            if (iteratedFireStation.getAddress().equals(address)  && iteratedFireStation.getStation().equals(station)) {
+                itr.remove();
             }
-        });
+        }
     }
 
-    public void addMapping(String address, Integer station) {
+
+    public void addMapping(List<FireStation> fireStations,String address, Integer station) {
         fireStation = new FireStation(address, station);
-        inputData.getFirestationsData().add(fireStation);
+        fireStations.add(fireStation);
     }
 
-    public void modifyMapping(String address, Integer station) {
-        inputData.getFirestationsData().forEach(objectToDealWith -> {
+    public void modifyMapping(List<FireStation> fireStations,String address, Integer station) {
+        fireStations.forEach(objectToDealWith -> {
             if (objectToDealWith.getAddress().equals(address) ) {
                 objectToDealWith.setStation(station);
             }
