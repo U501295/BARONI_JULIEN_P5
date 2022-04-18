@@ -1,7 +1,9 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
+import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,20 +30,26 @@ class PersonServiceTest {
 
     @Test
     void removePerson() {
-        Assertions.assertThat(testJDD.size()).isEqualTo(3);
-        personService.removePerson(testJDD,"John","Boyd");
-        Assertions.assertThat(testJDD.size()).isEqualTo(2);
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
+        Assertions.assertThat(persons.size()).isEqualTo(23);
+        List<Person> result = personService.removePerson("John","Boyd");
+        Assertions.assertThat(result.size()).isEqualTo(22);
     }
 
     @Test
     void addPerson() {
-        personService.addPerson(testJDD,"Four","Quatre","tyzi street","MickeyVille",798,"65555555","toto@toto.fr");
-        Assertions.assertThat(testJDD.size()).isEqualTo(4);
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
+        Assertions.assertThat(persons.size()).isEqualTo(23);
+        List<Person> result =personService.addPerson("Four","Quatre","tyzi street","MickeyVille",798,"65555555","toto@toto.fr");
+        Assertions.assertThat(result.size()).isEqualTo(24);
     }
 
     @Test
     void modifyPerson() {
-        personService.modifyPerson(testJDD,"John","Boyd","Street","Ville",000,"phone","email");
-        Assertions.assertThat(testJDD.size()).isEqualTo(3);
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
+        Assertions.assertThat(persons.get(0).getFirstName()).isEqualTo("John");
+        Assertions.assertThat(persons.get(0).getAddress()).isEqualTo("1509 Culver St");
+        List<Person> result = personService.modifyPerson("John","Boyd","Street","Ville",000,"phone","email");
+        Assertions.assertThat(persons.get(0).getAddress()).isEqualTo("Street");
     }
 }

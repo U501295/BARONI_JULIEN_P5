@@ -16,7 +16,6 @@ import java.util.*;
 public class DataService {
     MedicalRecord medicalRecord;
     Person person;
-    DataListFormatDTO outputDataList;
 
     public List<Integer> countAdultsAndChildren(Integer station){
         List<Integer> AdultsAndChildren= new ArrayList<>();
@@ -49,33 +48,6 @@ public class DataService {
         return AdultsAndChildren;
     }
 
-    //TODO : supprimer si code modifie bon 2
-    /*public List<OutputDataListFormat> returnPersonsCoveredByFireStation(Integer station){
-        List<OutputDataListFormat> outputList = new ArrayList<OutputDataListFormat>();
-        for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
-            String fireStationAddress = null;
-            if (fireStation.getStation().equals(station)){
-                fireStationAddress = fireStation.getAddress() ;
-            }
-            for (Person person : InputData.INSTANCE.getPersonsData()){
-                if (fireStationAddress!=null && fireStationAddress.equals(person.getAddress())){
-                    for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()){
-                        if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
-                            if (getAge(medicalRecord.getBirthDate())>18){
-                                OutputDataListFormat outputDataList = new OutputDataListFormat(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone(), 0,1);
-                                outputList.add(outputDataList);
-                            } else if (getAge(medicalRecord.getBirthDate())<=18 && getAge(medicalRecord.getBirthDate())>=0){
-                                OutputDataListFormat outputDataList = new OutputDataListFormat(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone(), 1, 0);
-                                outputList.add(outputDataList);
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-        return outputList;
-    }*/
 
     public List<FireStationDTO> returnPersonsCoveredByFireStation(Integer station){
         List<FireStationDTO> outputList = new ArrayList<FireStationDTO>();

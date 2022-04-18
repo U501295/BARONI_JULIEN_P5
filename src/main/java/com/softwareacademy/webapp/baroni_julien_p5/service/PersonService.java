@@ -1,6 +1,7 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -10,7 +11,8 @@ import java.util.List;
 public class PersonService {
     Person person;
 
-    public void removePerson(List<Person> persons, String firstName, String lastName) {
+    public List<Person> removePerson(String firstName, String lastName) {
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
         Iterator<Person> itr = persons.iterator();
         while (itr.hasNext()) {
             Person iteratedPerson = itr.next();
@@ -18,14 +20,18 @@ public class PersonService {
                 itr.remove();
             }
         }
+        return persons;
     }
 
-    public void addPerson(List<Person> persons,String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
+    public List<Person> addPerson(String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
         person = new Person(firstName,lastName,address,city,zip,phone,email);
        persons.add(person);
+       return persons;
     }
 
-    public void modifyPerson(List<Person> persons,String firstName,String lastName, String address, String city, Integer zip, String phone, String email) {
+    public List<Person> modifyPerson(String firstName,String lastName, String address, String city, Integer zip, String phone, String email) {
+        List<Person> persons = InputData.INSTANCE.getPersonsData();
        persons.forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setAddress(address);
@@ -35,7 +41,7 @@ public class PersonService {
                 objectToDealWith.setEmail(email);
             }
         });
-
+        return persons;
     }
 
 

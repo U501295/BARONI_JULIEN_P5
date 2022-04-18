@@ -1,6 +1,7 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -11,7 +12,8 @@ public class FireStationService {
 
     FireStation fireStation;
 
-    public void removeMapping(List<FireStation> fireStations, String address, Integer station) {
+    public List<FireStation> removeMapping(String address, Integer station) {
+        List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
         Iterator<FireStation> itr = fireStations.iterator();
         while (itr.hasNext()) {
             FireStation iteratedFireStation = itr.next();
@@ -19,21 +21,25 @@ public class FireStationService {
                 itr.remove();
             }
         }
+        return fireStations;
     }
 
 
-    public void addMapping(List<FireStation> fireStations,String address, Integer station) {
+    public List<FireStation> addMapping(String address, Integer station) {
+        List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
         fireStation = new FireStation(address, station);
         fireStations.add(fireStation);
+        return fireStations;
     }
 
-    public void modifyMapping(List<FireStation> fireStations,String address, Integer station) {
+    public List<FireStation> modifyMapping(String address, Integer station) {
+        List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
         fireStations.forEach(objectToDealWith -> {
             if (objectToDealWith.getAddress().equals(address) ) {
                 objectToDealWith.setStation(station);
             }
 
         });
-
+        return fireStations;
     }
 }
