@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.model.DTO;
+package com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,11 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.ElementCollection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data

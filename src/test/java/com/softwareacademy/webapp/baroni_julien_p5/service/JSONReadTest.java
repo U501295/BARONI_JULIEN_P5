@@ -1,30 +1,21 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.assertj.core.api.Assertions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import org.json.simple.parser.ParseException;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 class JSONReadTest {

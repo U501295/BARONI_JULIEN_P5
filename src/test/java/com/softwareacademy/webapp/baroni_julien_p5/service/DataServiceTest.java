@@ -1,39 +1,14 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
-import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
-import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
-import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
-import com.softwareacademy.webapp.baroni_julien_p5.model.ODT.OutputDataListFormat;
-import jdk.internal.util.xml.impl.Input;
-import jdk.nashorn.internal.parser.JSONParser;
+import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.core.io.Resource;
-import org.json.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 class DataServiceTest {
 
@@ -64,25 +39,15 @@ class DataServiceTest {
 
     @Test
     void returnPersonsCoveredByFireStationWhenAStationIsGiven() throws IOException {
-        List<OutputDataListFormat> outputList = dataService.returnPersonsCoveredByFireStation(3);
+        List<FireStationDTO> outputList = dataService.returnPersonsCoveredByFireStation(3);
         Assertions.assertThat(outputList).isNotEmpty();
 
     }
 
     @Test
     void countAdultsAndChildrenWhenIsGivenPersons(){
-        List<OutputDataListFormat> mockOutputList = new ArrayList<OutputDataListFormat>();
-        OutputDataListFormat mockedAdultOne = new OutputDataListFormat("JASON", "Statam", "Himalaya Street", "07654367", 0,1);
-        OutputDataListFormat mockedChildrenOne = new OutputDataListFormat("Baby", "Bell", "Himalaya Street", "07654367", 1,0);
-        OutputDataListFormat mockedChildrenTwo = new OutputDataListFormat("Bell", "Baby", "Himalaya Street", "07654367", 1,0);
-        mockOutputList.add(mockedAdultOne);
-        mockOutputList.add(mockedChildrenOne);
-        mockOutputList.add(mockedChildrenTwo);
-        Integer[] result = dataService.countAdultsAndChildren(mockOutputList);
-        Integer numberOfAdults = result[0];
-        Integer numberOfChildren = result[1];
-        Assertions.assertThat(numberOfChildren).isEqualTo(2);
-        Assertions.assertThat(numberOfAdults).isEqualTo(1);
+        List<Integer> output = dataService.countAdultsAndChildren(3);
+        Assertions.assertThat(output).isNotEmpty();
     }
 
     @Test
@@ -93,47 +58,59 @@ class DataServiceTest {
 
     @Test
     void getPhoneNumberOfMembersFromAnAdress(){
-        List<OutputDataListFormat> outputList = dataService.returnPhoneListCoveredByFireStation(3);
+        List<PhoneDTO> outputList = dataService.returnPhoneListCoveredByFireStation(3);
         Assertions.assertThat(outputList.size()).isEqualTo(11);
     }
 
     @Test
     void returnHabitantsListLivingAtAnAddressWithOneUnhabitant(){
-        List<OutputDataListFormat> outputList = dataService.returnHabitantsListLivingAtAnAddress("834 Binoc Ave");
+        List<FireDTO> outputList = dataService.returnHabitantsListLivingAtAnAddress("834 Binoc Ave");
         Assertions.assertThat(outputList.size()).isEqualTo(1);
     }
 
     @Test
     void returnHabitantsListLivingAtAnAddressWithMultipleUnhabitants(){
-        List<OutputDataListFormat> outputList = dataService.returnHabitantsListLivingAtAnAddress("1509 Culver St");
+        List<FireDTO> outputList = dataService.returnHabitantsListLivingAtAnAddress("1509 Culver St");
         Assertions.assertThat(outputList.size()).isEqualTo(5);
     }
-
+/*
     @Test
-    void returnHomesCoveredByFireStationsDuringFlood(){
+    void returnPersonsCoveredByFireStationsDuringFlood(){
         List<Integer> stationsNumbers = new ArrayList<>();
         stationsNumbers.add(1);
         stationsNumbers.add(2);
-        List<List <OutputDataListFormat>> outputList = dataService.returnHomesCoveredByFireStationsDuringFlood(stationsNumbers);
+        List <FloodPersonsDTO> outputList = dataService.returnPersonsCoveredByFireStationsDuringFlood(stationsNumbers);
+        Assertions.assertThat(outputList.size()).isEqualTo(11);
+    }
+*/
+    //TODO : voir pourquoi il y a des doublons
+    @Test
+    void returnPersonsAndAdressCoveredByFireStationsDuringFlood(){
+        List<Integer> stationsNumbers = new ArrayList<>();
+        stationsNumbers.add(1);
+        stationsNumbers.add(2);
+        List <FloodPersonsAndAdressDTO> outputList = dataService.returnPersonsAndAdressCoveredByFireStationsDuringFlood(stationsNumbers);
         Assertions.assertThat(outputList.size()).isEqualTo(2);
     }
 
+
+
     @Test
     void returnPersonInfos(){
-        OutputDataListFormat personInfos = dataService.returnPersonInfos("Kendrik", "Stelzer");
+        PersonInfoDTO personInfos = dataService.returnPersonInfos("Kendrik", "Stelzer");
         Assertions.assertThat(personInfos).isNotNull();
         Assertions.assertThat(personInfos.getAge()).isEqualTo(8);
     }
 
     @Test
     void returnCityUnhabitantsEmailWithNonExistingCity(){
-        List<OutputDataListFormat> outputList = dataService.returnCityUnhabitantsEmail("City");
+        List<PersonEmailDTO> outputList = dataService.returnCityEmailAddresses("City");
         Assertions.assertThat(outputList).isEmpty();
     }
 
     @Test
     void returnCityUnhabitantsEmailWithExistingCity(){
-        List<OutputDataListFormat> outputList = dataService.returnCityUnhabitantsEmail("Culver");
+        List<PersonEmailDTO> outputList = dataService.returnCityEmailAddresses("Culver");
         Assertions.assertThat(outputList).isNotEmpty();
     }
 

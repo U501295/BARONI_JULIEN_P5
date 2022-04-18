@@ -1,11 +1,11 @@
-package com.softwareacademy.webapp.baroni_julien_p5.model.ODT;
+package com.softwareacademy.webapp.baroni_julien_p5.model.DTO;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class OutputDataListFormat {
+public class DataListFormatDTO {
 
     private String firstName;
 
@@ -37,7 +37,7 @@ public class OutputDataListFormat {
 
 
     // pour la méthode actionsForReturnPersonsCoveredByFireStation
-    public OutputDataListFormat(String firstName, String lastName, String address, String phone, Integer isAChildren, Integer isAnAdult) {
+    public DataListFormatDTO(String firstName, String lastName, String address, String phone, Integer isAChildren, Integer isAnAdult) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -47,7 +47,7 @@ public class OutputDataListFormat {
     }
 
     // pour la méthode returnChildrenAndParentsLivingAtAnAddress
-    public OutputDataListFormat(String firstName, String lastName, Integer age, List<String[]> houseMembers) {
+    public DataListFormatDTO(String firstName, String lastName, Integer age, List<String[]> houseMembers) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -55,14 +55,14 @@ public class OutputDataListFormat {
     }
 
     // pour la méthode returnPhoneListCoveredByFireStation et returnUnhabitantsEmails
-    public OutputDataListFormat(String phone,String email) {
+    public DataListFormatDTO(String phone, String email) {
         this.phone = phone;
         this.email = email;
     }
 
 
     //pour la methode returnHabitantListLivingAtAnAddress
-    public OutputDataListFormat(String firstName, String lastName, String phone, Integer age, List<String> medications, List<String> allergies, Integer stationNumber) {
+    public DataListFormatDTO(String firstName, String lastName, String phone, Integer age, List<String> medications, List<String> allergies, Integer stationNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -73,7 +73,7 @@ public class OutputDataListFormat {
     }
 
     //pour la methode returnHomesCoveredByFireStationsDuringFlood
-    public OutputDataListFormat(String firstName, String lastName, String phone, Integer age, List<String> medications, List<String> allergies, String address, Integer stationNumber) {
+    public DataListFormatDTO(String firstName, String lastName, String phone, Integer age, List<String> medications, List<String> allergies, String address, Integer stationNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -85,7 +85,7 @@ public class OutputDataListFormat {
     }
 
     //pour la methode returnPersonInfos
-    public OutputDataListFormat(String firstName, String lastName, String address, Integer age, String email, List<String> medications, List<String> allergies) {
+    public DataListFormatDTO(String firstName, String lastName, String address, Integer age, String email, List<String> medications, List<String> allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

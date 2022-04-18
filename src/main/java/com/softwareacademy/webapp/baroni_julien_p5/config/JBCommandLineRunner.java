@@ -2,7 +2,7 @@ package com.softwareacademy.webapp.baroni_julien_p5.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.InputData;
+import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.PersonService;
 
 import org.springframework.beans.factory.InitializingBean;
