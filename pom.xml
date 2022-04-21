@@ -117,11 +117,8 @@
                         <phase>integration-test</phase>
                         <configuration>
                             <excludes>
-                                <exclude>none</exclude>
+                                <exclude>**/*IT.java</exclude>
                             </excludes>
-                            <includes>
-                                <include>**/*IT.java</include>
-                            </includes>
                         </configuration>
                     </execution>
                 </executions>

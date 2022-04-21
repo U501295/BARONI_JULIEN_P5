@@ -25,7 +25,8 @@ class FireStationServiceIT {
     FireStationService fireStationService;
 
     static List<FireStation> fsJsonData = InputData.getJsonData().getFirestationsData();
-    static List<FireStation> fsRefCompare = InputData.INSTANCE.getFirestationsData();
+    static List<FireStation> fsRefCompare = InputData.getJsonData().getFirestationsData();
+
 
     @Test
     @Order(1)

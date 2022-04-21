@@ -31,7 +31,7 @@ class MedicalRecordServiceIT {
     DataService dataService = new DataService();
 
     static List<MedicalRecord> mdJsonData = InputData.getJsonData().getMedicalrecordsData();
-    static List<MedicalRecord> mdRefCompare = InputData.INSTANCE.getMedicalrecordsData();
+    static List<MedicalRecord> mdRefCompare = InputData.getJsonData().getMedicalrecordsData();
 
     MedicalRecordServiceTest mdt = new MedicalRecordServiceTest();
 

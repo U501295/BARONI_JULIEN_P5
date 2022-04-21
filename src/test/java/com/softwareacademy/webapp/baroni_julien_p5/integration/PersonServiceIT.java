@@ -25,7 +25,7 @@ class PersonServiceIT {
     PersonService personService;
 
     static List<Person> pJsonData = InputData.getJsonData().getPersonsData();
-    static List<Person> pRefCompare = InputData.INSTANCE.getPersonsData();
+    static List<Person> pRefCompare = InputData.getJsonData().getPersonsData();
 
     @Test
     @Order(1)
