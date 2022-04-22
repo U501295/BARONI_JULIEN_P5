@@ -11,6 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Services CRUD pour la gestion de la partie MedicalRecord du document d'input.
+ * <p>
+ */
 @RestController
 @RequestMapping("/")
 public class MedicalRecordController {

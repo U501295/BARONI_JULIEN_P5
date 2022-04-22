@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Services CRUD pour la gestion de la partie Person du document d'input.
+ * <p>
+ */
 @RestController
 @RequestMapping("/")
 public class PersonController {
