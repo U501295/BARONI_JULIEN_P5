@@ -18,7 +18,7 @@ public class FunctionnalController {
     DataService dataService;
 
     @GetMapping("firestation")
-    public FireStationACCountDTO getPersonsCoveredByFireStation(@RequestParam(value="stationNumber", required=true) Integer stationNumber) {
+    public FireStationACCountDTO getPersonsCoveredByFireStation(@RequestParam(value = "stationNumber", required = true) Integer stationNumber) {
         FireStationACCountDTO fireStationACCountDTO = new FireStationACCountDTO();
         fireStationACCountDTO.setCoveredPersons(dataService.returnPersonsCoveredByFireStation(stationNumber));
         fireStationACCountDTO.setNumberOfAdults(dataService.countAdultsAndChildren(stationNumber).get(0));
@@ -26,11 +26,8 @@ public class FunctionnalController {
         return fireStationACCountDTO;
     }
 
-    //TODO : voir pourquoi les adresses ne matchent pas celles qui sont rentrées en input
-    //TODO : virer des houses members l'enfant en question
-    //TODO : renvoyer chaine vide si pas d'enfants
     @GetMapping("childAlert")
-    public ChildAlertDTO getChildrenLivingAtGivenAdress(@RequestParam(value="address", required=true) String address) {
+    public ChildAlertDTO getChildrenLivingAtGivenAdress(@RequestParam(value = "address", required = true) String address) {
         ChildAlertDTO childAlertDTO = new ChildAlertDTO();
         childAlertDTO.setAlertedChildren(dataService.returnChildrenAndParentsLivingAtAnAddress(address));
         return childAlertDTO;
@@ -38,7 +35,7 @@ public class FunctionnalController {
 
     //TODO : voir ici pourquoi ça marche quand on rentre aucun paramètre
     @GetMapping("phoneAlert")
-    public PhoneAlertDTO getPhoneNumbersCoveredByFireStation(@RequestParam(value="firestation", required=true) Integer fireStationNumber) {
+    public PhoneAlertDTO getPhoneNumbersCoveredByFireStation(@RequestParam(value = "firestation", required = true) Integer fireStationNumber) {
         PhoneAlertDTO phoneAlertDTO = new PhoneAlertDTO();
         phoneAlertDTO.setPhonesCoveredByStation(dataService.returnPhoneListCoveredByFireStation(fireStationNumber));
         return phoneAlertDTO;
@@ -46,7 +43,7 @@ public class FunctionnalController {
 
     //TODO : voir pourquoi on a quand même un affichage quand on rentre aucun paramètre
     @GetMapping("fire")
-    public FireAndFireStationNumberDTO getPersonsAndAddressesCoveredByFireStationDuringFlood(@RequestParam(value="address", required=true) String address) {
+    public FireAndFireStationNumberDTO getPersonsAndAddressesCoveredByFireStationDuringFlood(@RequestParam(value = "address", required = true) String address) {
         FireAndFireStationNumberDTO fireAndFireStationNumberDTO = new FireAndFireStationNumberDTO();
         fireAndFireStationNumberDTO.setPersonsLivingAtTheGivenAddress(dataService.returnHabitantsListLivingAtAnAddress(address));
         fireAndFireStationNumberDTO.setFireStationNumber(dataService.returnFireStationNumberCoveringTheAddress(address));
@@ -61,7 +58,7 @@ public class FunctionnalController {
     }
 
     @GetMapping("personInfo")
-    public PersonInfoDTO getPersonInfo(@RequestParam String firstName,String lastName) {
+    public PersonInfoDTO getPersonInfo(@RequestParam String firstName, String lastName) {
         PersonInfoDTO personInfoDTO = dataService.returnPersonInfos(firstName, lastName);
         return personInfoDTO;
     }
@@ -72,7 +69,6 @@ public class FunctionnalController {
         emailDTO.setCityEmailAddresses(dataService.returnCityEmailAddresses(city));
         return emailDTO;
     }
-
 
 
 }

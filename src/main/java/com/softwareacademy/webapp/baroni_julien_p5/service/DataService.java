@@ -90,9 +90,9 @@ public class DataService {
             String addressToMatch = address;
             if (getAge(medicalRecord.getBirthDate()) <= 18) {
                 for (Person person : InputData.INSTANCE.getPersonsData()) {
-                    if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))) {
+                    if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName())) && person.getAddress().equals(addressToMatch)) {
                         //addressToMatch = person.getAddress();
-                        outputList.add(new ChildDTO(person.getFirstName(), person.getLastName(), getAge(medicalRecord.getBirthDate()), getHouseMembers(addressToMatch)));
+                        outputList.add(new ChildDTO(person.getFirstName(), person.getLastName(), getAge(medicalRecord.getBirthDate()), getHouseMembers(addressToMatch, person.getFirstName(), person.getLastName())));
                     }
                 }
             }
@@ -102,15 +102,19 @@ public class DataService {
     }
 
     //http://localhost:8080/childAlert?address=%3Caddress%3E
-    //TODO : rajouter les firstname et lastname pour que ce soit uniquement que les autres membres du foyer qui apparaissent
-    public List<String[]> getHouseMembers(String address) {
+    public List<String[]> getHouseMembers(String address, String firstName, String lastName) {
         List<String[]> houseMembers = new ArrayList<String[]>();
         for (Person person : InputData.INSTANCE.getPersonsData()) {
             String[] houseMember = new String[]{"", ""};
             if (person.getAddress().equals(address)) {
                 houseMember[0] = person.getFirstName();
                 houseMember[1] = person.getLastName();
-                houseMembers.add(houseMember);
+                if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+
+                } else {
+                    houseMembers.add(houseMember);
+                }
+
             }
         }
         return houseMembers;

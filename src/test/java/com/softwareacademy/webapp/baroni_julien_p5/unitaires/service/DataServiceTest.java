@@ -52,7 +52,7 @@ class DataServiceTest {
 
     @Test
     void getMembersLivingAtAnAdress() {
-        List<String[]> houseMembers = dataService.getHouseMembers("112 Steppes Pl");
+        List<String[]> houseMembers = dataService.getHouseMembers("112 Steppes Pl", "Tony", "Cooper");
         Assertions.assertThat(houseMembers.size()).isEqualTo(3);
     }
 
