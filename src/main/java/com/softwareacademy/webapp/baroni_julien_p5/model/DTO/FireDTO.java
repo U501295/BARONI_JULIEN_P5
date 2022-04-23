@@ -1,10 +1,13 @@
 package com.softwareacademy.webapp.baroni_julien_p5.model.DTO;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class FireDTO {
     private String firstName;
     private String lastName;
@@ -12,7 +15,6 @@ public class FireDTO {
     private Integer age;
     private List<String> medications;
     private List<String> allergies;
-
 
 
     public FireDTO(String firstName, String lastName, String phone, Integer age, List<String> medications, List<String> allergies) {

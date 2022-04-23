@@ -1,5 +1,6 @@
 package com.softwareacademy.webapp.baroni_julien_p5.unitaires.service;
 
+import com.softwareacademy.webapp.baroni_julien_p5.exception.NoDataFoundException;
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
 import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
@@ -36,11 +37,12 @@ class DataServiceTest {
     }
 
     @Test
-    void returnPersonsCoveredByFireStationWhenAStationIsGiven() throws IOException {
+    void returnPersonsCoveredByFireStationWhenAStationIsGiven() {
         List<FireStationDTO> outputList = dataService.returnPersonsCoveredByFireStation(3);
         Assertions.assertThat(outputList).isNotEmpty();
 
     }
+
 
     @Test
     void countAdultsAndChildrenWhenIsGivenPersons() {
@@ -51,19 +53,12 @@ class DataServiceTest {
     @Test
     void getMembersLivingAtAnAdress() {
         List<String[]> houseMembers = dataService.getHouseMembers("112 Steppes Pl");
-
-
         Assertions.assertThat(houseMembers.size()).isEqualTo(3);
-
     }
 
     @Test
     void getPhoneNumberOfMembersFromAnAdress() {
         List<PhoneDTO> outputList = dataService.returnPhoneListCoveredByFireStation(4);
-        for (PhoneDTO person : outputList
-        ) {
-            System.out.print(person.getPhone());
-        }
         Assertions.assertThat(outputList.size()).isEqualTo(4);
     }
 
@@ -97,8 +92,12 @@ class DataServiceTest {
 
     @Test
     void returnCityUnhabitantsEmailWithNonExistingCity() {
-        List<PersonEmailDTO> outputList = dataService.returnCityEmailAddresses("City");
-        Assertions.assertThat(outputList).isEmpty();
+        try {
+            List<PersonEmailDTO> outputList = dataService.returnCityEmailAddresses("City");
+        } catch (Exception e) {
+            Assertions.assertThat(e)
+                    .isInstanceOf(NoDataFoundException.class);
+        }
     }
 
     @Test

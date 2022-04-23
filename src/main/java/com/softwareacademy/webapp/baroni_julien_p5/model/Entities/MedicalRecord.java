@@ -2,6 +2,8 @@ package com.softwareacademy.webapp.baroni_julien_p5.model.Entities;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.ElementCollection;
@@ -14,7 +16,8 @@ import java.util.Date;
 import java.util.List;
 
 
-@Data
+@Getter
+@Setter
 public class MedicalRecord {
 
     @JsonProperty("firstName")
@@ -23,15 +26,15 @@ public class MedicalRecord {
     private String lastName;
     @JsonProperty("birthdate")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-    private Calendar birthDate ;
+    private Calendar birthDate;
     @JsonProperty("medications")
     @ElementCollection
     private List<String> medications;
     @JsonProperty("allergies")
     @ElementCollection
-    private List<String> allergies ;
+    private List<String> allergies;
 
-    public MedicalRecord(){
+    public MedicalRecord() {
 
     }
 
@@ -45,28 +48,26 @@ public class MedicalRecord {
 
 
     public Calendar getBirthDate() {
-        if (this.birthDate != null){
+        if (this.birthDate != null) {
             Calendar birthDate = (Calendar) this.birthDate.clone();
             return birthDate;
-        }else{
+        } else {
             return null;
         }
     }
 
 
     public void setBirthDate(Calendar birthDate) {
-        if (birthDate != null){
-            if (this.birthDate == null){
-                this.birthDate = (Calendar)birthDate.clone();
-            }else{
+        if (birthDate != null) {
+            if (this.birthDate == null) {
+                this.birthDate = (Calendar) birthDate.clone();
+            } else {
                 this.birthDate.setTime(birthDate.getTime());
             }
-        }else{
+        } else {
             this.birthDate = null;
         }
     }
-
-
 
 
 }

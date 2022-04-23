@@ -1,5 +1,6 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
+import com.softwareacademy.webapp.baroni_julien_p5.exception.NoDataFoundException;
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
 import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
@@ -15,24 +16,25 @@ import java.util.*;
 @Service
 public class DataService {
 
-    public List<Integer> countAdultsAndChildren(Integer station){
-        List<Integer> AdultsAndChildren= new ArrayList<>();
+    //http://localhost:8080/firestation?stationNumber=%3Cstation_number%3E
+    public List<Integer> countAdultsAndChildren(Integer station) {
+        List<Integer> AdultsAndChildren = new ArrayList<>();
         Integer adultCount = 0;
         Integer childrenCount = 0;
 
         for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
             String fireStationAddress = null;
-            if (fireStation.getStation().equals(station)){
-                fireStationAddress = fireStation.getAddress() ;
+            if (fireStation.getStation().equals(station)) {
+                fireStationAddress = fireStation.getAddress();
             }
-            for (Person person : InputData.INSTANCE.getPersonsData()){
-                if (fireStationAddress!=null && fireStationAddress.equals(person.getAddress())){
-                    for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()){
-                        if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
-                            if (getAge(medicalRecord.getBirthDate())>18){
-                                adultCount+=1;
-                            } else if (getAge(medicalRecord.getBirthDate())<=18 && getAge(medicalRecord.getBirthDate())>=0){
-                               childrenCount+=1;
+            for (Person person : InputData.INSTANCE.getPersonsData()) {
+                if (fireStationAddress != null && fireStationAddress.equals(person.getAddress())) {
+                    for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()) {
+                        if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))) {
+                            if (getAge(medicalRecord.getBirthDate()) > 18) {
+                                adultCount += 1;
+                            } else if (getAge(medicalRecord.getBirthDate()) <= 18 && getAge(medicalRecord.getBirthDate()) >= 0) {
+                                childrenCount += 1;
                             }
                         }
                     }
@@ -47,21 +49,22 @@ public class DataService {
     }
 
 
-    public List<FireStationDTO> returnPersonsCoveredByFireStation(Integer station){
+    //http://localhost:8080/firestation?stationNumber=%3Cstation_number%3E
+    public List<FireStationDTO> returnPersonsCoveredByFireStation(Integer station) {
         List<FireStationDTO> outputList = new ArrayList<FireStationDTO>();
         for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
             String fireStationAddress = null;
-            if (fireStation.getStation().equals(station)){
-                fireStationAddress = fireStation.getAddress() ;
+            if (fireStation.getStation().equals(station)) {
+                fireStationAddress = fireStation.getAddress();
             }
-            for (Person person : InputData.INSTANCE.getPersonsData()){
-                if (fireStationAddress!=null && fireStationAddress.equals(person.getAddress())){
-                    for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()){
-                        if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
-                            if (getAge(medicalRecord.getBirthDate())>18){
+            for (Person person : InputData.INSTANCE.getPersonsData()) {
+                if (fireStationAddress != null && fireStationAddress.equals(person.getAddress())) {
+                    for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()) {
+                        if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))) {
+                            if (getAge(medicalRecord.getBirthDate()) > 18) {
                                 FireStationDTO outputUrlStationNumber = new FireStationDTO(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone());
                                 outputList.add(outputUrlStationNumber);
-                            } else if (getAge(medicalRecord.getBirthDate())<=18 && getAge(medicalRecord.getBirthDate())>=0){
+                            } else if (getAge(medicalRecord.getBirthDate()) <= 18 && getAge(medicalRecord.getBirthDate()) >= 0) {
                                 FireStationDTO outputUrlStationNumber = new FireStationDTO(person.getFirstName(), person.getLastName(), person.getAddress(), person.getPhone());
                                 outputList.add(outputUrlStationNumber);
                             }
@@ -71,18 +74,25 @@ public class DataService {
                 }
             }
         }
+
+        if (outputList.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+
+
         return outputList;
     }
 
-    public List<ChildDTO> returnChildrenAndParentsLivingAtAnAddress(String address){
+    //http://localhost:8080/childAlert?address=%3Caddress%3E
+    public List<ChildDTO> returnChildrenAndParentsLivingAtAnAddress(String address) {
         List<ChildDTO> outputList = new ArrayList<ChildDTO>();
-        for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()){
+        for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()) {
             String addressToMatch = address;
-            if (getAge(medicalRecord.getBirthDate())<=18){
-                for (Person person : InputData.INSTANCE.getPersonsData()){
-                    if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
+            if (getAge(medicalRecord.getBirthDate()) <= 18) {
+                for (Person person : InputData.INSTANCE.getPersonsData()) {
+                    if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))) {
                         //addressToMatch = person.getAddress();
-                        outputList.add(new ChildDTO(person.getFirstName(), person.getLastName(),getAge(medicalRecord.getBirthDate()), getHouseMembers(addressToMatch)));
+                        outputList.add(new ChildDTO(person.getFirstName(), person.getLastName(), getAge(medicalRecord.getBirthDate()), getHouseMembers(addressToMatch)));
                     }
                 }
             }
@@ -91,11 +101,13 @@ public class DataService {
         return outputList;
     }
 
-    public List<String[]> getHouseMembers(String address){
+    //http://localhost:8080/childAlert?address=%3Caddress%3E
+    //TODO : rajouter les firstname et lastname pour que ce soit uniquement que les autres membres du foyer qui apparaissent
+    public List<String[]> getHouseMembers(String address) {
         List<String[]> houseMembers = new ArrayList<String[]>();
-        for(Person person : InputData.INSTANCE.getPersonsData()){
-            String[] houseMember = new String[]{"",""};
-            if (person.getAddress().equals(address)){
+        for (Person person : InputData.INSTANCE.getPersonsData()) {
+            String[] houseMember = new String[]{"", ""};
+            if (person.getAddress().equals(address)) {
                 houseMember[0] = person.getFirstName();
                 houseMember[1] = person.getLastName();
                 houseMembers.add(houseMember);
@@ -104,54 +116,63 @@ public class DataService {
         return houseMembers;
     }
 
-    public List<PhoneDTO> returnPhoneListCoveredByFireStation(Integer station){
+    //http://localhost:8080/phoneAlert?firestation=%3Cfirestation_number%3E
+    public List<PhoneDTO> returnPhoneListCoveredByFireStation(Integer station) {
         List<PhoneDTO> outputList = new ArrayList<PhoneDTO>();
         for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
             String fireStationAddress = null;
             if (fireStation.getStation().equals(station)) {
                 fireStationAddress = fireStation.getAddress();
             }
-            for (Person person : InputData.INSTANCE.getPersonsData()){
-                if (fireStationAddress!=null && fireStationAddress.equals(person.getAddress())){
+            for (Person person : InputData.INSTANCE.getPersonsData()) {
+                if (fireStationAddress != null && fireStationAddress.equals(person.getAddress())) {
                     outputList.add(new PhoneDTO(person.getPhone()));
                 }
             }
+        }
+
+        if (outputList.isEmpty()) {
+            throw new NoDataFoundException();
         }
 
         return outputList;
     }
 
     //http://localhost:8080/fire?address=<address>
-    public List<FireDTO> returnHabitantsListLivingAtAnAddress (String address){
+    public List<FireDTO> returnHabitantsListLivingAtAnAddress(String address) {
         List<FireDTO> outputList = new ArrayList<>();
 
-        for(Person person : InputData.INSTANCE.getPersonsData()){
+        for (Person person : InputData.INSTANCE.getPersonsData()) {
             Integer stationNumber = 0;
-            for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()){
-                if (fireStation.getAddress().equals(address)){
+            for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
+                if (fireStation.getAddress().equals(address)) {
                     stationNumber = fireStation.getStation();
                 }
             }
-            if (person.getAddress().equals(address)){
-                for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()){
-                    if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))){
-                        outputList.add(new FireDTO(medicalRecord.getFirstName(), medicalRecord.getLastName(), person.getPhone(), getAge(medicalRecord.getBirthDate()), medicalRecord.getMedications(),medicalRecord.getAllergies()));
+            if (person.getAddress().equals(address)) {
+                for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()) {
+                    if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))) {
+                        outputList.add(new FireDTO(medicalRecord.getFirstName(), medicalRecord.getLastName(), person.getPhone(), getAge(medicalRecord.getBirthDate()), medicalRecord.getMedications(), medicalRecord.getAllergies()));
                     }
 
                 }
             }
 
         }
+        if (outputList.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+
         return outputList;
     }
 
     //http://localhost:8080/fire?address=<address>
-    public Integer returnFireStationNumberCoveringTheAddress(String address){
+    public Integer returnFireStationNumberCoveringTheAddress(String address) {
 
-            Integer stationNumber = 0;
+        Integer stationNumber = 0;
 
-        for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()){
-            if (fireStation.getAddress().equals(address)){
+        for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
+            if (fireStation.getAddress().equals(address)) {
                 stationNumber = fireStation.getStation();
             }
         }
@@ -159,69 +180,80 @@ public class DataService {
         return stationNumber;
     }
 
-    public List <FloodPersonsAndAdressDTO> returnPersonsAndAdressCoveredByFireStationsDuringFlood(List<Integer> fireStationsNumbers){
+    public List<FloodPersonsAndAdressDTO> returnPersonsAndAdressCoveredByFireStationsDuringFlood(List<Integer> fireStationsNumbers) {
         List<FloodPersonsAndAdressDTO> outputList = new ArrayList<FloodPersonsAndAdressDTO>();
 
-        for (int fireStationNumber : fireStationsNumbers){
+        for (int fireStationNumber : fireStationsNumbers) {
             for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
                 String fireStationAddress = null;
-                if (fireStation.getStation().equals(fireStationNumber)){
-                    fireStationAddress = fireStation.getAddress() ;
+                if (fireStation.getStation().equals(fireStationNumber)) {
+                    fireStationAddress = fireStation.getAddress();
                 }
 
-                    if (fireStationAddress!=null){
+                if (fireStationAddress != null) {
 
-                                outputList.add(new FloodPersonsAndAdressDTO(fireStation.getAddress(),returnHabitantsListLivingAtAnAddress(fireStation.getAddress())));
+                    outputList.add(new FloodPersonsAndAdressDTO(fireStation.getAddress(), returnHabitantsListLivingAtAnAddress(fireStation.getAddress())));
 
 
-                    }
+                }
 
             }
         }
+        if (outputList.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+
         return outputList;
     }
 
 
     //http://localhost:8080/personInfo?firstName=<firstName>&lastName=<lastName>
-    public PersonInfoDTO returnPersonInfos(String firstName, String lastName){
+    public PersonInfoDTO returnPersonInfos(String firstName, String lastName) {
         PersonInfoDTO personInfos = null;
-        for(Person person : InputData.INSTANCE.getPersonsData()){
-            if ((person.getFirstName().equals(firstName) && (person.getLastName().equals(lastName)))){
-                    for(MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()){
-                        if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))) {
-                            personInfos = new PersonInfoDTO(firstName,lastName, person.getAddress(),getAge(medicalRecord.getBirthDate()),person.getEmail(), medicalRecord.getMedications(),medicalRecord.getAllergies());
-                        }
-                        }
+        for (Person person : InputData.INSTANCE.getPersonsData()) {
+            if ((person.getFirstName().equals(firstName) && (person.getLastName().equals(lastName)))) {
+                for (MedicalRecord medicalRecord : InputData.INSTANCE.getMedicalrecordsData()) {
+                    if ((person.getFirstName().equals(medicalRecord.getFirstName())) && (person.getLastName().equals(medicalRecord.getLastName()))) {
+                        personInfos = new PersonInfoDTO(firstName, lastName, person.getAddress(), getAge(medicalRecord.getBirthDate()), person.getEmail(), medicalRecord.getMedications(), medicalRecord.getAllergies());
+                    }
                 }
+            }
 
         }
-        
+
+        if (personInfos.equals(null)) {
+            throw new NoDataFoundException();
+        }
+
+
         return personInfos;
     }
 
 
-    public List<PersonEmailDTO> returnCityEmailAddresses(String city){
+    public List<PersonEmailDTO> returnCityEmailAddresses(String city) {
         List<PersonEmailDTO> outputList = new ArrayList<>();
-        for (Person person : InputData.INSTANCE.getPersonsData()){
-            if (person.getCity().equals(city)){
+        for (Person person : InputData.INSTANCE.getPersonsData()) {
+            if (person.getCity().equals(city)) {
                 outputList.add(new PersonEmailDTO(person.getEmail()));
             }
         }
+        if (outputList.isEmpty()) {
+            throw new NoDataFoundException();
+        }
+
         return outputList;
     }
 
 
-
-
-    public Integer getAge(@NotNull Calendar dateOfBirth){
-        int age =0;
+    public Integer getAge(@NotNull Calendar dateOfBirth) {
+        int age = 0;
         Integer yearOfBirth = dateOfBirth.get(Calendar.YEAR);
         int yearOfToday = Calendar.getInstance().get(Calendar.YEAR);
         age = yearOfToday - yearOfBirth;
         return age;
     }
 
-    public Calendar returnDateWithWantedFormat(String date){
+    public Calendar returnDateWithWantedFormat(String date) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         Date parsedDate = null;
@@ -234,10 +266,6 @@ public class DataService {
         return calendar;
 
     }
-
-
-
-
 
 
 }
