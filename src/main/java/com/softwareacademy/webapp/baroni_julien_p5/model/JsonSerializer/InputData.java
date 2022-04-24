@@ -63,7 +63,7 @@ public class InputData {
 
     public static InputData getJsonData() {
         InputData result = new InputData();
-
+        log.info("Request data from JSON");
         try {
             Path path = Paths.get("src\\main\\resources\\JSON\\data.json");
             List<String> lines = Files.readAllLines(path);

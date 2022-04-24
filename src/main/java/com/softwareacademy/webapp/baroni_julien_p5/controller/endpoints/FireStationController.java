@@ -4,6 +4,7 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.FireStationACCountD
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.FireStationDTO;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
+import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
 import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
 import com.softwareacademy.webapp.baroni_julien_p5.service.FireStationService;
@@ -31,24 +32,27 @@ public class FireStationController {
     @Autowired
     FireStationService fireStationService;
 
-    @DeleteMapping(value = "firestation/{address}&{stationNumber}")
-    public List<FireStation> deleteFireStation(@PathVariable String address, @PathVariable Integer stationNumber) {
+    @DeleteMapping(value = "firestation/{address}&{station}")
+    public List<FireStation> deleteFireStation(@PathVariable String address, @PathVariable Integer station) {
+        log.info("request to delete firestation number ={} from address{}", address, station);
         List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
-        return fireStationService.removeMapping(fireStations, address, stationNumber);
+        return fireStationService.removeMapping(fireStations, address, station);
 
     }
 
-    @PostMapping(value = "firestation/{address}&{stationNumber}")
-    public List<FireStation> postFireStation(@PathVariable String address, @PathVariable Integer stationNumber) {
+    @PostMapping(value = "firestation/{address}&{station}")
+    public List<FireStation> postFireStation(@RequestBody FireStation firestation) {
+        log.info("request to create firestation number ={} from address{}", firestation.getStation(), firestation.getAddress());
         List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
-        return fireStationService.addMapping(fireStations, address, stationNumber);
+        return fireStationService.addMapping(fireStations, firestation.getAddress(), firestation.getStation());
 
     }
 
-    @PutMapping(value = "firestation/{address}&{stationNumber}")
-    public List<FireStation> modifyFireStation(@PathVariable String address, @PathVariable Integer stationNumber) {
+    @PutMapping(value = "firestation/{address}&{station}")
+    public List<FireStation> modifyFireStation(@PathVariable String address, @RequestBody FireStation firestation) {
+        log.info("request to modify firestation number ={} from address{}", firestation.getStation(), address);
         List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
-        return fireStationService.modifyMapping(fireStations, address, stationNumber);
+        return fireStationService.modifyMapping(fireStations, address, firestation.getStation());
 
     }
 

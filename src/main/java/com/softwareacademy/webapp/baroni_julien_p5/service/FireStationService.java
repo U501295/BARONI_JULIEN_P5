@@ -1,6 +1,7 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
 
+import com.softwareacademy.webapp.baroni_julien_p5.controller.exception.NoDataFoundException;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import lombok.extern.slf4j.Slf4j;
@@ -27,18 +28,26 @@ public class FireStationService {
 
 
     //utilisation d'un iterator qui permet de modifier la liste pendant qu'on est entrain de la parcourir
+    //on se sert d'un compteur appelé flagOfRemoval pour déterminer si la donné est matchée ou non et lancer une exception le cas échant
     public List<FireStation> removeMapping(List<FireStation> fireStations, String address, Integer station) {
         List<FireStation> output = new ArrayList<>();
         Iterator<FireStation> itr = fireStations.iterator();
+        Integer flagOfRemoval = 0;
         while (itr.hasNext()) {
             FireStation iteratedFireStation = itr.next();
             if (iteratedFireStation.getAddress().equals(address) && iteratedFireStation.getStation().equals(station)) {
                 itr.remove();
+                flagOfRemoval = 1;
             } else {
                 output.add(iteratedFireStation);
             }
         }
-        log.info("Deleted firestation mapping");
+        if (flagOfRemoval.equals(1)) {
+            log.info("Deleted firestation mapping");
+        } else {
+            throw new NoDataFoundException();
+        }
+
         return output;
     }
 

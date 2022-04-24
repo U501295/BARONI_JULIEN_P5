@@ -8,6 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Tests unitaires permettant de s'assurer que la couche service est fonctionnelle
+ * <p>
+ */
+
+
 class DataServiceTest {
 
     DataService dataService = new DataService();

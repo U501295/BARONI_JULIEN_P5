@@ -19,6 +19,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Tests unitaires permettant de s'assurer que la couche service est fonctionnelle
+ * <p>
+ */
 public class MedicalRecordServiceTest {
     List<MedicalRecord> testJDD = new ArrayList<>();
     DataService dataService = new DataService();

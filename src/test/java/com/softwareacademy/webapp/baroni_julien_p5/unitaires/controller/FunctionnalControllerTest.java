@@ -17,6 +17,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Tests unitaires permettant de s'assurer que la couche controller communique de la manière souhaitée.
+ * <p>
+ */
+
 @WebMvcTest(controllers = FunctionnalController.class)
 class FunctionnalControllerTest {
 
@@ -28,7 +36,7 @@ class FunctionnalControllerTest {
 
 
     @MockBean
-    DataService dataService;
+    private DataService dataService;
 
     //TODO : faire des tests avec des cas non passants et des messages d'erreurs issus des exceptions
 
@@ -39,33 +47,27 @@ class FunctionnalControllerTest {
         when(dataService.countAdultsAndChildren(anyInt())).thenReturn(Arrays.asList(5, 2));
 
         mockMvc.perform(get("/firestation?stationNumber=3"))
-                .andExpect(status().isOk())
-        //.andDo(print())
-        ;
+                .andExpect(status().isOk());
 
     }
 
     //TODO : faire des tests avec des cas non passants et des messages d'erreurs issus des exceptions
-    /*
+
     @Test
     void getPersonsCoveredByFireStationWithError() throws Exception {
-        when(dataService.returnPersonsCoveredByFireStation(anyInt())).thenThrow();
-        when(dataService.countAdultsAndChildren(anyInt())).thenReturn(Arrays.asList(5, 2));
+        when(dataService.returnPersonsCoveredByFireStation(anyInt())).thenThrow(NoDataFoundException.class);
+        when(dataService.countAdultsAndChildren(anyInt())).thenThrow(NoDataFoundException.class);
 
         mockMvc.perform(get("/firestation?stationNumber=36"))
-                .andExpect(status().isNotFound())
-        //.andDo(print())
-        ;
+                .andExpect(status().isInternalServerError());
 
-    }*/
+    }
 
     @Test
     void getChildrenLivingAtGivenAdress() throws Exception {
         when(dataService.returnChildrenAndHouseMembersLivingAtAnAddress(anyString())).thenReturn(null);
         mockMvc.perform(get("/childAlert?address=nonexistingaddress"))
-                .andExpect(status().isOk())
-        //.andDo(print())
-        ;
+                .andExpect(status().isOk());
     }
 
     @Test

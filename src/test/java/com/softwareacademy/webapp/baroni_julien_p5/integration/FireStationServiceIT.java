@@ -39,8 +39,7 @@ class FireStationServiceIT {
 
 
     @Test
-    @Order(1)
-    void parcoursUtilisateur() {
+    void parcoursUtilisateurPassant() {
         List<FireStation> result = fireStationService.removeMapping(fsJsonData, "1509 Culver St", 3);
         Assertions.assertThat(result.size()).isEqualTo(fsRefCompare.size() - 1);
         result = fireStationService.addMapping(fsJsonData, "1509 Culver St", 3);

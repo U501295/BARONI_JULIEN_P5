@@ -18,14 +18,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Tests unitaires permettant de s'assurer que la serialisation de la couche model est fonctionnelle
+ * <p>
+ */
 class JSONReadTest {
 
 
     @Test
     void parsePerson() throws JsonProcessingException {
-        String jsonPerson = "{\"firstName\":\"John\", \"lastName\":\"Boyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\"}" ;
+        String jsonPerson = "{\"firstName\":\"John\", \"lastName\":\"Boyd\", \"address\":\"1509 Culver St\", \"city\":\"Culver\", \"zip\":\"97451\", \"phone\":\"841-874-6512\", \"email\":\"jaboyd@email.com\"}";
         ObjectMapper objectMapper = new ObjectMapper();
-        Person person = objectMapper.readValue(jsonPerson,Person.class);
+        Person person = objectMapper.readValue(jsonPerson, Person.class);
         Assertions.assertThat(person.getFirstName()).isEqualTo("John");
     }
 
@@ -39,7 +46,7 @@ class JSONReadTest {
 
     @Test
     void parseMedicalRecord() throws JsonProcessingException {
-        String json = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }" ;
+        String json = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }";
         ObjectMapper objectMapper = new ObjectMapper();
         MedicalRecord result = objectMapper.readValue(json, MedicalRecord.class);
         Assertions.assertThat(result.getAllergies()).isNotEmpty();
@@ -67,7 +74,7 @@ class JSONReadTest {
         String jsonContent = String.join("", lines);
         JSONObject jsonObject = new JSONObject(jsonContent);
         JSONArray jsonArray = jsonObject.getJSONArray("medicalrecords");
-        JSONObject medicalRecord =jsonArray.getJSONObject(4);
+        JSONObject medicalRecord = jsonArray.getJSONObject(4);
         JSONArray medications = (JSONArray) medicalRecord.get("medications");
         Assertions.assertThat(medications.get(0)).isEqualTo("tetracyclaz:650mg");
     }
@@ -86,7 +93,6 @@ class JSONReadTest {
         Assertions.assertThat(result.getMedicalrecordsData().size()).isEqualTo(23);
 
     }
-
 
 
 }

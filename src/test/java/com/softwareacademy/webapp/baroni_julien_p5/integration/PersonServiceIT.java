@@ -39,8 +39,7 @@ class PersonServiceIT {
     static List<Person> pRefCompare = InputData.getJsonData().getPersonsData();
 
     @Test
-    @Order(1)
-    void parcoursUtilisateur() {
+    void parcoursUtilisateurPassant() {
         List<Person> result = personService.removePerson(pJsonData,
                 "John",
                 "Boyd"

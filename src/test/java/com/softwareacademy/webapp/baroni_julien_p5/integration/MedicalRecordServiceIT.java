@@ -48,8 +48,7 @@ class MedicalRecordServiceIT {
 
 
     @Test
-    @Order(1)
-    void parcoursUtilisateur() {
+    void parcoursUtilisateurPassant() {
         List<MedicalRecord> result = medicalRecordService.removeMedicalRecord(mdJsonData, "Tenley", "Boyd");
         Assertions.assertThat(result.size()).isEqualTo(mdRefCompare.size() - 1);
         result = medicalRecordService.addMedicalRecord(mdJsonData,
