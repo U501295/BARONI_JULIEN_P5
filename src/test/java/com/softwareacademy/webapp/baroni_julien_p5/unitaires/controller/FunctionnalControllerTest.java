@@ -1,9 +1,8 @@
 package com.softwareacademy.webapp.baroni_julien_p5.unitaires.controller;
 
-import com.softwareacademy.webapp.baroni_julien_p5.controller.FunctionnalController;
-import com.softwareacademy.webapp.baroni_julien_p5.exception.NoDataFoundException;
+import com.softwareacademy.webapp.baroni_julien_p5.controller.endpoints.FunctionnalController;
+import com.softwareacademy.webapp.baroni_julien_p5.controller.exception.NoDataFoundException;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
-import com.softwareacademy.webapp.baroni_julien_p5.service.FireStationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -63,7 +61,7 @@ class FunctionnalControllerTest {
 
     @Test
     void getChildrenLivingAtGivenAdress() throws Exception {
-        when(dataService.returnChildrenAndParentsLivingAtAnAddress(anyString())).thenReturn(null);
+        when(dataService.returnChildrenAndHouseMembersLivingAtAnAddress(anyString())).thenReturn(null);
         mockMvc.perform(get("/childAlert?address=nonexistingaddress"))
                 .andExpect(status().isOk())
         //.andDo(print())

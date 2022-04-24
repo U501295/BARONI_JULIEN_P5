@@ -1,8 +1,6 @@
 package com.softwareacademy.webapp.baroni_julien_p5.unitaires.controller;
 
-import com.softwareacademy.webapp.baroni_julien_p5.controller.MedicalRecordController;
-import com.softwareacademy.webapp.baroni_julien_p5.controller.PersonController;
-import com.softwareacademy.webapp.baroni_julien_p5.service.MedicalRecordService;
+import com.softwareacademy.webapp.baroni_julien_p5.controller.endpoints.PersonController;
 import com.softwareacademy.webapp.baroni_julien_p5.service.PersonService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

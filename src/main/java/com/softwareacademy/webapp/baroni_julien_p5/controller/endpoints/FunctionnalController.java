@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.controller;
+package com.softwareacademy.webapp.baroni_julien_p5.controller.endpoints;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
@@ -10,6 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Services métiers pour la gestion des URLs spécifiques de l'application
+ * <p>
+ */
 
 @RestController
 @RequestMapping("/")
@@ -17,6 +24,7 @@ public class FunctionnalController {
     @Autowired
     DataService dataService;
 
+    //http://localhost:8080/firestation?stationNumber=%3Cstation_number%3E
     @GetMapping("firestation")
     public FireStationACCountDTO getPersonsCoveredByFireStation(@RequestParam(value = "stationNumber", required = true) Integer stationNumber) {
         FireStationACCountDTO fireStationACCountDTO = new FireStationACCountDTO();
@@ -26,13 +34,15 @@ public class FunctionnalController {
         return fireStationACCountDTO;
     }
 
+    //http://localhost:8080/childAlert?address=%3Caddress%3E
     @GetMapping("childAlert")
     public ChildAlertDTO getChildrenLivingAtGivenAdress(@RequestParam(value = "address", required = true) String address) {
         ChildAlertDTO childAlertDTO = new ChildAlertDTO();
-        childAlertDTO.setAlertedChildren(dataService.returnChildrenAndParentsLivingAtAnAddress(address));
+        childAlertDTO.setAlertedChildren(dataService.returnChildrenAndHouseMembersLivingAtAnAddress(address));
         return childAlertDTO;
     }
 
+    //http://localhost:8080/phoneAlert?firestation=%3Cfirestation_number%3E
     //TODO : voir ici pourquoi ça marche quand on rentre aucun paramètre
     @GetMapping("phoneAlert")
     public PhoneAlertDTO getPhoneNumbersCoveredByFireStation(@RequestParam(value = "firestation", required = true) Integer fireStationNumber) {
@@ -41,28 +51,32 @@ public class FunctionnalController {
         return phoneAlertDTO;
     }
 
+    //http://localhost:8080/fire?address=%3Caddress%3E
     //TODO : voir pourquoi on a quand même un affichage quand on rentre aucun paramètre
     @GetMapping("fire")
-    public FireAndFireStationNumberDTO getPersonsAndAddressesCoveredByFireStationDuringFlood(@RequestParam(value = "address", required = true) String address) {
+    public FireAndFireStationNumberDTO getPersonsAndAddressesCoveredByFireStation(@RequestParam(value = "address", required = true) String address) {
         FireAndFireStationNumberDTO fireAndFireStationNumberDTO = new FireAndFireStationNumberDTO();
         fireAndFireStationNumberDTO.setPersonsLivingAtTheGivenAddress(dataService.returnHabitantsListLivingAtAnAddress(address));
         fireAndFireStationNumberDTO.setFireStationNumber(dataService.returnFireStationNumberCoveringTheAddress(address));
         return fireAndFireStationNumberDTO;
     }
 
+    //http://localhost:8080/flood/stations?stations=%3Ca
     @GetMapping("flood/stations")
-    public FloodDTO getPersonsAndAddressesCoveredByFireStationDuringFlood(@RequestParam List<Integer> stations) {
+    public FloodDTO getPersonsAndAddressesCoveredByFireStationsDuringFlood(@RequestParam List<Integer> stations) {
         FloodDTO floodDTO = new FloodDTO();
         floodDTO.setFlood(dataService.returnPersonsAndAdressCoveredByFireStationsDuringFlood(stations));
         return floodDTO;
     }
 
+    //http://localhost:8080/personInfo?firstName=%3CfirstName%3E&lastName=%3ClastName%3E
     @GetMapping("personInfo")
     public PersonInfoDTO getPersonInfo(@RequestParam String firstName, String lastName) {
         PersonInfoDTO personInfoDTO = dataService.returnPersonInfos(firstName, lastName);
         return personInfoDTO;
     }
 
+    //http://localhost:8080/communityEmail?city=%3Ccity%3E
     @GetMapping("communityEmail")
     public EmailDTO getPersonInfo(@RequestParam String city) {
         EmailDTO emailDTO = new EmailDTO();

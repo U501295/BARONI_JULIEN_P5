@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.controller;
+package com.softwareacademy.webapp.baroni_julien_p5.controller.endpoints;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;
@@ -13,7 +13,8 @@ import java.util.List;
  * @author : JULIEN BARONI
  *
  * <p>
- * Services CRUD pour la gestion de la partie Person du document d'input.
+ * Controller utilisant les services CRUD pour la gestion de la partie Person du document d'input.
+ * http://localhost:8080/person/
  * <p>
  */
 @RestController

@@ -9,33 +9,44 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Services CRUD pour la gestion de la partie Person du document d'input.
+ * http://localhost:8080/firestation/
+ * <p>
+ */
+
+
 @Service
 public class PersonService {
     Person person;
 
+    //utilisation d'un iterator qui permet de modifier la liste pendant qu'on est entrain de la parcourir
     public List<Person> removePerson(List<Person> persons, String firstName, String lastName) {
         List<Person> output = new ArrayList<>();
         Iterator<Person> itr = persons.iterator();
         while (itr.hasNext()) {
             Person iteratedPerson = itr.next();
-            if (iteratedPerson.getFirstName().equals(firstName)  && iteratedPerson.getLastName().equals(lastName) ) {
+            if (iteratedPerson.getFirstName().equals(firstName) && iteratedPerson.getLastName().equals(lastName)) {
                 itr.remove();
-            }else{
+            } else {
                 output.add(iteratedPerson);
             }
         }
         return output;
     }
 
-    public List<Person> addPerson(List<Person> persons,String firstName,String lastName, String address, String city, Integer zip, String phone, String email){
+    public List<Person> addPerson(List<Person> persons, String firstName, String lastName, String address, String city, Integer zip, String phone, String email) {
         List<Person> output = persons;
-        person = new Person(firstName,lastName,address,city,zip,phone,email);
+        person = new Person(firstName, lastName, address, city, zip, phone, email);
         output.add(person);
         return output;
     }
 
-    public List<Person> modifyPerson(List<Person> persons,String firstName,String lastName, String address, String city, Integer zip, String phone, String email) {
-       persons.forEach(objectToDealWith -> {
+    public List<Person> modifyPerson(List<Person> persons, String firstName, String lastName, String address, String city, Integer zip, String phone, String email) {
+        persons.forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setAddress(address);
                 objectToDealWith.setCity(city);
@@ -44,7 +55,7 @@ public class PersonService {
                 objectToDealWith.setEmail(email);
             }
         });
-       List<Person> output = persons;
+        List<Person> output = persons;
         return output;
     }
 

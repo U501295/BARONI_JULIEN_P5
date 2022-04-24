@@ -1,5 +1,15 @@
 package com.softwareacademy.webapp.baroni_julien_p5.integration;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Tests d'intégrations permettant de dérouler les services CRUDS les uns à la suites des autres
+ * dans une logique de test fonctionnel. Afin de valider la non permanence des modifications en base.
+ * On compare nos modifications avec une version vierge de la base de donnée afin de s'assurer de leur validité.
+ * <p>
+ */
+
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.FireStationService;

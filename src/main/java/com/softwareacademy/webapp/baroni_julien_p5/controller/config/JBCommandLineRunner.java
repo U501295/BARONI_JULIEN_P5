@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.config;
+package com.softwareacademy.webapp.baroni_julien_p5.controller.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,16 +35,16 @@ public class JBCommandLineRunner implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         ObjectMapper mapper = new ObjectMapper();
-        log.info("Fetching data from input :");
+        log.debug("Fetching data from input :");
         try (InputStream inputStream = resource.getInputStream()) {
             //la partie chargée d'aller récupérer et sérialiser les données est située dans la classe InputData
             InputData inputData = mapper
                     .readValue(inputStream, new TypeReference<InputData>() {
                     });
-            log.info("SUCCESS");
+            log.info("SUCCESS in fetching data");
         } catch (IOException e) {
             //si les données ne parviennent pas à être chargées on stoppe l'application en lançant une RuntimeError
-            log.error("FAIL : " + e.getMessage());
+            log.error("FAIL in fetching data : " + e.getMessage());
             throw new RuntimeException("Unable to save data : " + e.getMessage(), e);
         }
     }

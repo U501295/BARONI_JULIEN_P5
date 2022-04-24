@@ -19,6 +19,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Cette classe permet de serialiser à l'aide d'un mapper dans getJsonData() le contenu du
+ * document JSON donné en input du projet. La serialisation est ensuite stockée dans une instance statique pouvant être
+ * ainsi plus facilement atteinte en lecture dans les services métiers. cela permet d'éviter d'avoir à faire appel à un nouvel objet
+ * à chaque fois qu'on veut accéder aux données sérialisées
+ * <p>
+ */
+
+
 @Getter
 @Setter
 @Slf4j
@@ -58,8 +71,11 @@ public class InputData {
             ObjectMapper objectMapper = new ObjectMapper();
             result = objectMapper.readValue(jsonContent, InputData.class);
         } catch (IOException e) {
-
+            //si les données ne parviennent pas à être chargées on stoppe l'application en lançant une RuntimeError
+            log.error("FAIL in fetching data : " + e.getMessage());
+            throw new RuntimeException("Unable to save data : " + e.getMessage(), e);
         }
+        log.info("SUCCESS in fetching data");
         return result;
     }
 

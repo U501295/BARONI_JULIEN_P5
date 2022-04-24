@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.controller;
+package com.softwareacademy.webapp.baroni_julien_p5.controller.endpoints;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.FireStationACCountDTO;
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.FireStationDTO;
@@ -18,7 +18,8 @@ import java.util.List;
  * @author : JULIEN BARONI
  *
  * <p>
- * Services CRUD pour la gestion de la partie FireStation du document d'input.
+ * Controller utilisant les services CRUD pour la gestion de la partie FireStation du document d'input.
+ * http://localhost:8080/firestation/
  * <p>
  */
 @RestController
@@ -26,7 +27,7 @@ import java.util.List;
 @Slf4j
 public class FireStationController {
 
-    
+
     @Autowired
     FireStationService fireStationService;
 

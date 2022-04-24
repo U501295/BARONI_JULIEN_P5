@@ -19,6 +19,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Tests d'intégrations permettant de dérouler les services CRUDS les uns à la suites des autres
+ * dans une logique de test fonctionnel. Afin de valider la non permanence des modifications en base.
+ * On compare nos modifications avec une version vierge de la base de donnée afin de s'assurer de leur validité.
+ * <p>
+ */
+
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)

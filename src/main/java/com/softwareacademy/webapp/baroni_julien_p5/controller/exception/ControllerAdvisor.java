@@ -1,23 +1,29 @@
-package com.softwareacademy.webapp.baroni_julien_p5.exception;
+package com.softwareacademy.webapp.baroni_julien_p5.controller.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BindException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * @author : JULIEN BARONI
+ *
+ * <p>
+ * Composant permettant de gérer les exceptions soulevés par les services appelés,
+ * au moment où elles remontent la stack jusqu'au controleur
+ * <p>
+ */
+
 @Slf4j
+@Component
+@ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NoDataFoundException.class)
@@ -32,8 +38,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    /*
     @ExceptionHandler({MethodArgumentTypeMismatchException.class,
-            TypeMismatchException.class, HttpMessageNotReadableException.class})
+            TypeMismatchException.class, HttpMessageNotReadableException.class, NoSuchElementException.class, InputMismatchException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(
             HttpClientErrorException.BadRequest ex, WebRequest request) {
 
@@ -75,6 +82,6 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         body.put("message :", "Input is empty");
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-    }
+    }*/
 
 }

@@ -1,16 +1,11 @@
 package com.softwareacademy.webapp.baroni_julien_p5.unitaires.service;
 
-import com.softwareacademy.webapp.baroni_julien_p5.exception.NoDataFoundException;
+import com.softwareacademy.webapp.baroni_julien_p5.controller.exception.NoDataFoundException;
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
-import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
 import org.assertj.core.api.Assertions;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
 import java.util.*;
 
 class DataServiceTest {
@@ -53,7 +48,7 @@ class DataServiceTest {
     @Test
     void getMembersLivingAtAnAdress() {
         List<String[]> houseMembers = dataService.getHouseMembers("112 Steppes Pl", "Tony", "Cooper");
-        Assertions.assertThat(houseMembers.size()).isEqualTo(3);
+        Assertions.assertThat(houseMembers.size()).isEqualTo(2);
     }
 
     @Test
