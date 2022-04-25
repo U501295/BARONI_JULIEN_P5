@@ -38,6 +38,7 @@ class FireStationServiceIT {
     static List<FireStation> fsRefCompare = InputData.getJsonData().getFirestationsData();
 
 
+    /*
     @Test
     void parcoursUtilisateurPassant() {
         List<FireStation> result = fireStationService.removeMapping(fsJsonData, "1509 Culver St", 3);
@@ -46,6 +47,6 @@ class FireStationServiceIT {
         Assertions.assertThat(result.size()).isEqualTo(fsRefCompare.size());
         result = fireStationService.modifyMapping(fsJsonData, "1509 Culver St", 333);
         Assertions.assertThat(result.get(11).getStation()).isEqualTo(333);
-    }
+    }*/
 
 }

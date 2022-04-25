@@ -32,7 +32,7 @@ public class FireStationController {
     @Autowired
     FireStationService fireStationService;
 
-    @DeleteMapping(value = "firestation/{address}&{station}")
+    @DeleteMapping(value = "firestation/{address}/{station}")
     public List<FireStation> deleteFireStation(@PathVariable String address, @PathVariable Integer station) {
         log.info("request to delete firestation number ={} from address{}", address, station);
         List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
@@ -40,7 +40,7 @@ public class FireStationController {
 
     }
 
-    @PostMapping(value = "firestation/{address}&{station}")
+    @PostMapping(value = "firestation")
     public List<FireStation> postFireStation(@RequestBody FireStation firestation) {
         log.info("request to create firestation number ={} from address{}", firestation.getStation(), firestation.getAddress());
         List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
@@ -48,11 +48,11 @@ public class FireStationController {
 
     }
 
-    @PutMapping(value = "firestation/{address}&{station}")
-    public List<FireStation> modifyFireStation(@PathVariable String address, @RequestBody FireStation firestation) {
+    @PutMapping(value = "firestation/{address}/{station}")
+    public List<FireStation> modifyFireStation(@PathVariable String address, @PathVariable Integer station, @RequestBody FireStation firestation) {
         log.info("request to modify firestation number ={} from address{}", firestation.getStation(), address);
         List<FireStation> fireStations = InputData.INSTANCE.getFirestationsData();
-        return fireStationService.modifyMapping(fireStations, address, firestation.getStation());
+        return fireStationService.modifyMapping(fireStations, address, station, firestation);
 
     }
 

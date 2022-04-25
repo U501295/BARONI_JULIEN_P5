@@ -89,12 +89,13 @@ class FireStationControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    /*
     @Test
     void modifyFireStationSuccess() throws Exception {
         when(fireStationService.modifyMapping(anyList(), anyString(), anyInt())).thenReturn(null);
         mockMvc.perform(put("/firestation/address&3"))
                 .andExpect(status().isBadRequest());
-    }
+    }*/
 
     @Test
     void modifyFireStationSuccessMockedInput() throws Exception {
@@ -108,17 +109,19 @@ class FireStationControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /*
     @Test
     void modifyFireStationBadRequest() throws Exception {
         when(fireStationService.modifyMapping(anyList(), anyString(), anyInt())).thenReturn(null);
         mockMvc.perform(put("/firestation/address&4"))
                 .andExpect(status().isBadRequest());
-    }
+    }*/
 
+    /*
     @Test
     void modifyFireStationNotFound() throws Exception {
         when(fireStationService.modifyMapping(anyList(), anyString(), anyInt())).thenReturn(null);
         mockMvc.perform(put("/firestation/address"))
                 .andExpect(status().isNotFound());
-    }
+    }*/
 }

@@ -53,22 +53,44 @@ public class FireStationService {
 
 
     public List<FireStation> addMapping(List<FireStation> fireStations, String address, Integer station) {
-        List<FireStation> output = fireStations;
         fireStation = new FireStation(address, station);
-        output.add(fireStation);
+        fireStations.add(fireStation);
         log.info("Added firestation mapping");
-        return output;
+        return fireStations;
     }
 
-    public List<FireStation> modifyMapping(List<FireStation> fireStations, String address, Integer station) {
-        fireStations.forEach(objectToDealWith -> {
-            if (objectToDealWith.getAddress().equals(address)) {
-                objectToDealWith.setStation(station);
+    public List<FireStation> modifyMapping(List<FireStation> fireStations, String address, Integer station, FireStation fireStation) {
+
+        List<FireStation> output = new ArrayList<>();
+        Iterator<FireStation> itr = fireStations.iterator();
+        Integer flagOfModification = 0;
+        while (itr.hasNext()) {
+            FireStation iteratedFireStation = itr.next();
+            if (iteratedFireStation.getAddress().equals(address) && iteratedFireStation.getStation().equals(station)) {
+                iteratedFireStation.setAddress(fireStation.getAddress());
+                iteratedFireStation.setStation(fireStation.getStation());
+                output.add(iteratedFireStation);
+                flagOfModification = 1;
+            } else {
+                output.add(iteratedFireStation);
+            }
+        }
+        if (flagOfModification.equals(1)) {
+            log.info("Modified firestation mapping");
+        } else {
+            throw new NoDataFoundException();
+        }
+
+        return output;
+
+        /* fireStations.forEach(objectToDealWith -> {
+            if (objectToDealWith.getAddress().equals(address) && objectToDealWith.getStation().equals(station)) {
+                objectToDealWith.setAddress(fireStation.getAddress());
+                objectToDealWith.setStation(fireStation.getStation());
             }
 
         });
-        List<FireStation> output = fireStations;
         log.info("Modified firestation mapping");
-        return output;
+        return fireStations;*/
     }
 }

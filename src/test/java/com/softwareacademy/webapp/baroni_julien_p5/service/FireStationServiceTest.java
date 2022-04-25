@@ -3,6 +3,7 @@ package com.softwareacademy.webapp.baroni_julien_p5.service;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.service.FireStationService;
 import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,7 @@ class FireStationServiceTest {
     FireStation fireStation2 = new FireStation("834 Binoc Ave", 3);
     FireStation fireStation3 = new FireStation("29 15th St", 2);
     FireStation fireStation4 = new FireStation("908 73rd St", 1);
+    FireStation fireStation5 = new FireStation("PUT TEST", 10);
     FireStationService fireStationService = new FireStationService();
 
 
@@ -48,18 +50,21 @@ class FireStationServiceTest {
 
     }
 
-    @Test
-    void modifyMapping() {
-        fireStationService.modifyMapping(testJDD, "834 Binoc Ave", 0);
-        Assertions.assertThat(testJDD.get(1).getStation()).isEqualTo(0);
-    }
 
     @Test
+    void modifyMapping() {
+        fireStationService.modifyMapping(testJDD, "834 Binoc Ave", 3, fireStation5);
+        Assertions.assertThat(testJDD.get(1).getStation()).isEqualTo(10);
+    }
+
+    /*
+    @Test
+    @Ignore
     void modifyMappingWhenAdressIsNotKnown() {
         fireStationService.modifyMapping(testJDD, "Unknown adress", 0);
         for (FireStation itr : testJDD) {
             Assertions.assertThat(itr.getStation()).isNotEqualTo(0);
         }
 
-    }
+    }*/
 }
