@@ -49,15 +49,42 @@ public class MedicalRecordService {
     }
 
     public List<MedicalRecord> addMedicalRecord(List<MedicalRecord> medicalRecords, String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
-        List<MedicalRecord> output = medicalRecords;
         medicalRecord = new MedicalRecord(firstName, lastName, birthDate, medications, allergies);
-        output.add(medicalRecord);
+        medicalRecords.add(medicalRecord);
         log.info("Added MedicalRecord mapping");
-        return output;
+        return medicalRecords;
     }
 
     public List<MedicalRecord> modifyMedicalRecord(List<MedicalRecord> medicalRecords, String firstName, String lastName, Calendar birthDate, List<String> medications, List<String> allergies) {
 
+        List<MedicalRecord> output = new ArrayList<>();
+        Iterator<MedicalRecord> itr = medicalRecords.iterator();
+        Integer flagOfModification = 0;
+        while (itr.hasNext()) {
+            MedicalRecord iteratedMedicalRecord = itr.next();
+            if (iteratedMedicalRecord.getFirstName().equals(firstName) && iteratedMedicalRecord.getLastName().equals(lastName)) {
+                iteratedMedicalRecord.setBirthDate(birthDate);
+                iteratedMedicalRecord.setMedications(medications);
+                iteratedMedicalRecord.setAllergies(allergies);
+                output.add(iteratedMedicalRecord);
+                flagOfModification = 1;
+            } else {
+                output.add(iteratedMedicalRecord);
+            }
+        }
+        if (flagOfModification.equals(1)) {
+            log.info("Modified medicalRecord mapping");
+        } else {
+            throw new NoDataFoundException();
+        }
+
+        return output;
+
+
+
+
+
+        /*
         medicalRecords.forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setBirthDate(birthDate);
@@ -68,7 +95,7 @@ public class MedicalRecordService {
         List<MedicalRecord> output = medicalRecords;
         log.info("Modified MedicalRecord mapping");
         return output;
-
+        */
     }
 
 }

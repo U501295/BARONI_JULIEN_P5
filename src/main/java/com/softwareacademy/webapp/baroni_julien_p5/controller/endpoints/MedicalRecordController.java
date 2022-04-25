@@ -27,7 +27,7 @@ public class MedicalRecordController {
 
     private MedicalRecordService medicalRecordService = new MedicalRecordService();
 
-    @DeleteMapping(value = "medicalRecord/{firstName}&{lastName}")
+    @DeleteMapping(value = "medicalRecord/{firstName}/{lastName}")
     public List<MedicalRecord> deleteMedicalRecord(@PathVariable String firstName, @PathVariable String lastName) {
         log.info("request to delete MedicalRecord from firstName={} lastName={}", firstName, lastName);
         List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
@@ -35,7 +35,7 @@ public class MedicalRecordController {
 
     }
 
-    @PostMapping(value = "medicalRecord/{firstName}&{lastName}&{birthDate}&{medications}&{allergies}")
+    @PostMapping(value = "medicalRecord")
     public List<MedicalRecord> postMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
         log.info("request to create a MedicalRecord from firstName={} lastName={}", medicalRecord.getFirstName(), medicalRecord.getLastName());
         List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
@@ -43,7 +43,7 @@ public class MedicalRecordController {
 
     }
 
-    @PutMapping(value = "medicalRecord/{firstName}&{lastName}&{birthDate}&{medications}&{allergies}")
+    @PutMapping(value = "medicalRecord/{firstName}/{lastName}")
     public List<MedicalRecord> modifyMedicalRecord(@PathVariable String firstName, @PathVariable String lastName, @RequestBody MedicalRecord medicalRecord) {
         log.info("request to modify MedicalRecord from firstName={} lastName={}", firstName, lastName);
         List<MedicalRecord> medicalRecords = InputData.INSTANCE.getMedicalrecordsData();
