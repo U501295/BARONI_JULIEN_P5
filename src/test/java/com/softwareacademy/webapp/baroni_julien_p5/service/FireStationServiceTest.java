@@ -1,5 +1,6 @@
 package com.softwareacademy.webapp.baroni_julien_p5.service;
 
+import com.softwareacademy.webapp.baroni_julien_p5.controller.exception.NoDataFoundException;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.service.FireStationService;
 import org.assertj.core.api.Assertions;
@@ -57,14 +58,15 @@ class FireStationServiceTest {
         Assertions.assertThat(testJDD.get(1).getStation()).isEqualTo(10);
     }
 
-    /*
+
     @Test
-    @Ignore
     void modifyMappingWhenAdressIsNotKnown() {
-        fireStationService.modifyMapping(testJDD, "Unknown adress", 0);
-        for (FireStation itr : testJDD) {
-            Assertions.assertThat(itr.getStation()).isNotEqualTo(0);
+        try {
+            Assertions.assertThat(fireStationService.modifyMapping(testJDD, "Unknown adress", 0, fireStation5));
+        } catch (Exception e) {
+            Assertions.assertThat(e).isInstanceOf(NoDataFoundException.class);
         }
 
-    }*/
+
+    }
 }

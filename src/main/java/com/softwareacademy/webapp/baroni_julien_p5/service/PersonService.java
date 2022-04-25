@@ -50,13 +50,43 @@ public class PersonService {
     }
 
     public List<Person> addPerson(List<Person> persons, String firstName, String lastName, String address, String city, Integer zip, String phone, String email) {
-        List<Person> output = persons;
         person = new Person(firstName, lastName, address, city, zip, phone, email);
-        output.add(person);
-        return output;
+        persons.add(person);
+        return persons;
     }
 
     public List<Person> modifyPerson(List<Person> persons, String firstName, String lastName, String address, String city, Integer zip, String phone, String email) {
+
+        List<Person> output = new ArrayList<>();
+        Iterator<Person> itr = persons.iterator();
+        Integer flagOfModification = 0;
+        while (itr.hasNext()) {
+            Person iteratedPerson = itr.next();
+            if (iteratedPerson.getFirstName().equals(firstName) && iteratedPerson.getLastName().equals(lastName)) {
+                iteratedPerson.setCity(city);
+                iteratedPerson.setZip(zip);
+                iteratedPerson.setPhone(phone);
+                iteratedPerson.setEmail(email);
+                output.add(iteratedPerson);
+                flagOfModification = 1;
+            } else {
+                output.add(iteratedPerson);
+            }
+        }
+        if (flagOfModification.equals(1)) {
+            log.info("Modified person mapping");
+        } else {
+            throw new NoDataFoundException();
+        }
+
+        return output;
+
+
+
+
+
+
+        /*
         persons.forEach(objectToDealWith -> {
             if (objectToDealWith.getFirstName().equals(firstName) && objectToDealWith.getLastName().equals(lastName)) {
                 objectToDealWith.setAddress(address);
@@ -67,7 +97,7 @@ public class PersonService {
             }
         });
         List<Person> output = persons;
-        return output;
+        return output;*/
     }
 
 

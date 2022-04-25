@@ -26,7 +26,7 @@ public class PersonController {
     PersonService personService = new PersonService();
 
 
-    @DeleteMapping(value = "person/{firstName}&{lastName}")
+    @DeleteMapping(value = "person/{firstName}/{lastName}")
     public List<Person> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
         log.info("request to delete firstName={} lastName={}", firstName, lastName);
         List<Person> persons = InputData.INSTANCE.getPersonsData();
@@ -34,7 +34,7 @@ public class PersonController {
 
     }
 
-    @PostMapping(value = "person/{firstName}&{lastName}&{address}&{city}&{zip}&{phone}&{email}")
+    @PostMapping(value = "person")
     public List<Person> postPerson(@RequestBody Person person) {
         log.info("request to create firstName={} lastName={}", person.getFirstName(), person.getLastName());
         List<Person> persons = InputData.INSTANCE.getPersonsData();
@@ -43,7 +43,7 @@ public class PersonController {
     }
 
 
-    @PutMapping(value = "person/{firstName}&{lastName}&{address}&{city}&{zip}&{phone}&{email}")
+    @PutMapping(value = "person/{firstName}/{lastName}")
     public List<Person> modifyPerson(@PathVariable String firstName, @PathVariable String lastName, @RequestBody Person person) {
         log.info("request to modify firstName={} lastName={}", person.getFirstName(), person.getLastName());
         List<Person> persons = InputData.INSTANCE.getPersonsData();
