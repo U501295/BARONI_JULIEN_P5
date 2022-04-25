@@ -40,7 +40,7 @@ class FireStationControllerTest {
     void deleteFireStationSuccessMockedInput() throws Exception {
         String jsonFireStation = "{ \"address\":\"1509 Culver St\", \"station\":\"3\" }";
         mockMvc.perform(
-                        delete("/firestation/1509 Culver St&3")
+                        delete("/firestation/1509 Culver St/3")
                                 .content(jsonFireStation)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -53,7 +53,7 @@ class FireStationControllerTest {
     void deleteFireStationInternalError() throws Exception {
         when(fireStationService.removeMapping(anyList(), anyString(), anyInt())).thenThrow(NoDataFoundException.class);
         mockMvc.perform(delete("/firestation/address&3"))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -64,21 +64,15 @@ class FireStationControllerTest {
     }
 
     @Test
-    void postFireStationBadRequest() throws Exception {
-        when(fireStationService.addMapping(anyList(), anyString(), anyInt())).thenReturn(null);
-        mockMvc.perform(post("/firestation/address&3"))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void postFireStationSuccessMockedInput() throws Exception {
         String jsonFireStation = "{ \"address\":\"1509 Culver St\", \"station\":\"3\" }";
         mockMvc.perform(
-                        post("/firestation/1509 Culver St&3")
+                        post("/firestation")
                                 .content(jsonFireStation)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -89,39 +83,24 @@ class FireStationControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    /*
-    @Test
-    void modifyFireStationSuccess() throws Exception {
-        when(fireStationService.modifyMapping(anyList(), anyString(), anyInt())).thenReturn(null);
-        mockMvc.perform(put("/firestation/address&3"))
-                .andExpect(status().isBadRequest());
-    }*/
 
     @Test
     void modifyFireStationSuccessMockedInput() throws Exception {
         String jsonFireStation = "{ \"address\":\"1509 Culver St\", \"station\":\"3\" }";
         mockMvc.perform(
-                        put("/firestation/1509 Culver St&4")
+                post("/firestation")
+                        .content(jsonFireStation)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+        mockMvc.perform(
+                        put("/firestation/1509 Culver St/4")
                                 .content(jsonFireStation)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 
-    /*
-    @Test
-    void modifyFireStationBadRequest() throws Exception {
-        when(fireStationService.modifyMapping(anyList(), anyString(), anyInt())).thenReturn(null);
-        mockMvc.perform(put("/firestation/address&4"))
-                .andExpect(status().isBadRequest());
-    }*/
-
-    /*
-    @Test
-    void modifyFireStationNotFound() throws Exception {
-        when(fireStationService.modifyMapping(anyList(), anyString(), anyInt())).thenReturn(null);
-        mockMvc.perform(put("/firestation/address"))
-                .andExpect(status().isNotFound());
-    }*/
 }

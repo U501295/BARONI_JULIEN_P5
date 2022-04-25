@@ -36,20 +36,19 @@ class MedicalRecordControllerTest {
     @Test
     void deleteMedicalRecordBadRequest() throws Exception {
         when(medicalRecordService.removeMedicalRecord(anyList(), anyString(), anyString())).thenReturn(null);
-        mockMvc.perform(delete("/medicalRecord/firstName&lastName"))
+        mockMvc.perform(delete("/medicalRecord/firstName/lastName"))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     void deleteMedicalRecordInternalError() throws Exception {
         when(medicalRecordService.removeMedicalRecord(anyList(), anyString(), anyString())).thenThrow(NoDataFoundException.class);
-        mockMvc.perform(delete("/medicalRecord/firstName&4"))
+        mockMvc.perform(delete("/medicalRecord/firstName/lastName"))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     void deleteMedicalRecordNotFound() throws Exception {
-        when(medicalRecordService.removeMedicalRecord(anyList(), anyString(), anyString())).thenReturn(null);
         mockMvc.perform(delete("/medicalRecord/firstName"))
                 .andExpect(status().isNotFound());
     }
@@ -58,7 +57,7 @@ class MedicalRecordControllerTest {
     void deleteMedicalRecordSuccessMockedInput() throws Exception {
         String inputJson = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }";
         mockMvc.perform(
-                        delete("/medicalRecord/Sophia&Zemicks")
+                        delete("/medicalRecord/Sophia/Zemicks")
                                 .content(inputJson)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -70,7 +69,7 @@ class MedicalRecordControllerTest {
     void postMedicalRecordSuccessMockedInput() throws Exception {
         String inputJson = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }";
         mockMvc.perform(
-                        post("/medicalRecord/Sophia&Zemicks&1988-06-03T22:00:00&aznol&peanut")
+                        post("/medicalRecord")
                                 .content(inputJson)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -90,17 +89,6 @@ class MedicalRecordControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void postMedicalRecordBadRequest() throws Exception {
-        String inputJson = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }";
-        mockMvc.perform(
-                        post("/medicalRecord/1&2")
-                                .content(inputJson)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .accept(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().isMethodNotAllowed());
-    }
 
     @Test
     void postMedicalRecordInternalError() throws Exception {
@@ -118,7 +106,7 @@ class MedicalRecordControllerTest {
     void modifyMedicalRecordSuccessMockedInput() throws Exception {
         String inputJson = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }";
         mockMvc.perform(
-                        put("/medicalRecord/Sophia&Zemicks&1988-06-03T22:00:00&aznol&peanut")
+                        put("/medicalRecord/Sophia/Zemicks")
                                 .content(inputJson)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -126,17 +114,6 @@ class MedicalRecordControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void modifyMedicalRecordNotFound() throws Exception {
-        String inputJson = " { \"firstName\":\"Sophia\", \"lastName\":\"Zemicks\", \"birthdate\":\"03/06/1988\", \"medications\":[\"aznol:60mg\", \"hydrapermazol:900mg\", \"pharmacol:5000mg\", \"terazine:500mg\"], \"allergies\":[\"peanut\", \"shellfish\", \"aznol\"] }";
-        mockMvc.perform(
-                        put("/medicalRecord/")
-                                .content(inputJson)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .accept(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().isNotFound());
-    }
 
     @Test
     void modifyMedicalRecordBadRequest() throws Exception {
