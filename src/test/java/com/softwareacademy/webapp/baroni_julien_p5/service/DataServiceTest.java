@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.unitaires.service;
+package com.softwareacademy.webapp.baroni_julien_p5.service;
 
 import com.softwareacademy.webapp.baroni_julien_p5.controller.exception.NoDataFoundException;
 import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
@@ -47,11 +47,24 @@ class DataServiceTest {
 
     }
 
+    @Test
+    void returnChildrenAndHouseMembersLivingAtAnAddress() {
+        List<ChildDTO> outputList = dataService.returnChildrenAndHouseMembersLivingAtAnAddress("892 Downing Ct");
+        Assertions.assertThat(outputList.size()).isEqualTo(1);
+
+    }
 
     @Test
     void countAdultsAndChildrenWhenIsGivenPersons() {
         List<Integer> output = dataService.countAdultsAndChildren(3);
         Assertions.assertThat(output).isNotEmpty();
+    }
+
+    //TODO : voir comment c'est possible que deux stations aient la même adresse
+    @Test
+    void returnFireStationNumberCoveringTheAddress() {
+        Integer output = dataService.returnFireStationNumberCoveringTheAddress("112 Steppes Pl");
+        Assertions.assertThat(output).isEqualTo(4);
     }
 
     @Test

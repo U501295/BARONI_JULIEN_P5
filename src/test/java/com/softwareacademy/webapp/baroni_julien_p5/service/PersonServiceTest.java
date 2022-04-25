@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.unitaires.service;
+package com.softwareacademy.webapp.baroni_julien_p5.service;
 
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.Person;

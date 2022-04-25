@@ -17,6 +17,6 @@ public class NoDataFoundException extends RuntimeException {
     public NoDataFoundException() {
 
         super("No data found");
-        log.error("There isn't any output in the Database to match the request");
+        //log.error("There isn't any output in the Database to match the request");
     }
 }

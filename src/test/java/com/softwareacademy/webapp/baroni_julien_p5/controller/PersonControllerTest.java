@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.unitaires.controller;
+package com.softwareacademy.webapp.baroni_julien_p5.controller;
 
 import com.softwareacademy.webapp.baroni_julien_p5.controller.endpoints.PersonController;
 import com.softwareacademy.webapp.baroni_julien_p5.service.PersonService;

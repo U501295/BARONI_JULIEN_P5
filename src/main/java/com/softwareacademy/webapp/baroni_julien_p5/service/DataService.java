@@ -64,8 +64,9 @@ public class DataService {
             log.error("No data was fetched from the database using the countAdultsAndChildren method ");
             throw new NoDataFoundException();
         } else {
-            log.info("Success");
+            log.info("Success in compting Adults");
             AdultsAndChildren.add(adultCount);
+            log.info("Success in compting Children");
             AdultsAndChildren.add(childrenCount);
         }
         return AdultsAndChildren;
@@ -197,7 +198,7 @@ public class DataService {
         log.info("Starting the method : returnHabitantsListLivingAtAnAddress");
         for (Person person : InputData.INSTANCE.getPersonsData()) {
             log.debug("Iterating through Person list");
-            Integer stationNumber = 0;
+            Integer stationNumber;
             for (FireStation fireStation : InputData.INSTANCE.getFirestationsData()) {
                 log.debug("Iterationg through FireStation list");
                 if (fireStation.getAddress().equals(address)) {
@@ -320,7 +321,7 @@ public class DataService {
     //cette fonction renvoit un age quand on lui donne une date de naissance au format DD/MM/YYYY
     public Integer getAge(@NotNull Calendar dateOfBirth) {
         int age = 0;
-        Integer yearOfBirth = dateOfBirth.get(Calendar.YEAR);
+        int yearOfBirth = dateOfBirth.get(Calendar.YEAR);
         int yearOfToday = Calendar.getInstance().get(Calendar.YEAR);
         age = yearOfToday - yearOfBirth;
         return age;
@@ -336,6 +337,7 @@ public class DataService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        assert parsedDate != null;
         calendar.setTime(parsedDate);
         return calendar;
 

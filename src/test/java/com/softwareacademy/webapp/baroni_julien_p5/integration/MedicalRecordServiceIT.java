@@ -1,14 +1,11 @@
 package com.softwareacademy.webapp.baroni_julien_p5.integration;
 
-import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.FireStation;
 import com.softwareacademy.webapp.baroni_julien_p5.model.Entities.MedicalRecord;
 import com.softwareacademy.webapp.baroni_julien_p5.model.JsonSerializer.InputData;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
-import com.softwareacademy.webapp.baroni_julien_p5.service.FireStationService;
 import com.softwareacademy.webapp.baroni_julien_p5.service.MedicalRecordService;
-import com.softwareacademy.webapp.baroni_julien_p5.unitaires.service.MedicalRecordServiceTest;
+import com.softwareacademy.webapp.baroni_julien_p5.service.MedicalRecordServiceTest;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

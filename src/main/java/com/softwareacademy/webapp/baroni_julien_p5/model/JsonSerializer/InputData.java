@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 
 import javax.persistence.ElementCollection;
 import java.io.IOException;
@@ -62,7 +63,7 @@ public class InputData {
     }
 
     public static InputData getJsonData() {
-        InputData result = new InputData();
+        InputData result;
         log.info("Request data from JSON");
         try {
             Path path = Paths.get("src\\main\\resources\\JSON\\data.json");

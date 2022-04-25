@@ -8,8 +8,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PersonInfoDTO {
 
+public class PersonInfoDTO {
+    
     private String firstName;
 
     private String lastName;
@@ -24,8 +25,6 @@ public class PersonInfoDTO {
 
     private List<String> allergies;
 
-    public PersonInfoDTO() {
-    }
 
     public PersonInfoDTO(String firstName, String lastName, String address, Integer age, String email, List<String> medications, List<String> allergies) {
         this.firstName = firstName;

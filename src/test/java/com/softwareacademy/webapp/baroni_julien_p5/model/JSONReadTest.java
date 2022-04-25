@@ -1,4 +1,4 @@
-package com.softwareacademy.webapp.baroni_julien_p5.unitaires.model;
+package com.softwareacademy.webapp.baroni_julien_p5.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
