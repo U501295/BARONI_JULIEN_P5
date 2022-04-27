@@ -37,16 +37,17 @@ class FireStationServiceIT {
     static List<FireStation> fsJsonData = InputData.getJsonData().getFirestationsData();
     static List<FireStation> fsRefCompare = InputData.getJsonData().getFirestationsData();
 
+    FireStation fireStationObjectforIntegrationTest = new FireStation("Integration Street", 333);
 
-    /*
+
     @Test
     void parcoursUtilisateurPassant() {
         List<FireStation> result = fireStationService.removeMapping(fsJsonData, "1509 Culver St", 3);
         Assertions.assertThat(result.size()).isEqualTo(fsRefCompare.size() - 1);
         result = fireStationService.addMapping(fsJsonData, "1509 Culver St", 3);
         Assertions.assertThat(result.size()).isEqualTo(fsRefCompare.size());
-        result = fireStationService.modifyMapping(fsJsonData, "1509 Culver St", 333);
+        result = fireStationService.modifyMapping(fsJsonData, "1509 Culver St", 3, fireStationObjectforIntegrationTest);
         Assertions.assertThat(result.get(11).getStation()).isEqualTo(333);
-    }*/
+    }
 
 }
