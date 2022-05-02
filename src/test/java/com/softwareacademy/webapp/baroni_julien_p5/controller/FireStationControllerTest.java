@@ -38,22 +38,20 @@ class FireStationControllerTest {
 
     @Test
     void deleteFireStationSuccessMockedInput() throws Exception {
-        String jsonFireStation = "{ \"address\":\"1509 Culver St\", \"station\":\"3\" }";
         mockMvc.perform(
                         delete("/firestation/1509 Culver St/3")
-                                .content(jsonFireStation)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     void deleteFireStationInternalError() throws Exception {
         when(fireStationService.removeMapping(anyList(), anyString(), anyInt())).thenThrow(NoDataFoundException.class);
-        mockMvc.perform(delete("/firestation/address&3"))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/firestation/1509 Culver St/3"))
+                .andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -72,7 +70,7 @@ class FireStationControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -99,7 +97,7 @@ class FireStationControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
-                .andDo(print())
+                //.andDo(print())
                 .andExpect(status().isOk());
     }
 

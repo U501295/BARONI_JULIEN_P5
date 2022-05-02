@@ -4,10 +4,7 @@ import com.softwareacademy.webapp.baroni_julien_p5.model.DTO.*;
 import com.softwareacademy.webapp.baroni_julien_p5.service.DataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,7 +44,6 @@ public class FunctionnalController {
     }
 
     //http://localhost:8080/phoneAlert?firestation=%3Cfirestation_number%3E
-    //TODO : voir ici pourquoi ça marche quand on rentre aucun paramètre
     @GetMapping("phoneAlert")
     public PhoneAlertDTO getPhoneNumbersCoveredByFireStation(@RequestParam(value = "firestation", required = true) Integer fireStationNumber) {
         log.info("request to getPhoneNumbersCoveredByFireStation number={} ", fireStationNumber);
@@ -57,7 +53,6 @@ public class FunctionnalController {
     }
 
     //http://localhost:8080/fire?address=%3Caddress%3E
-    //TODO : voir pourquoi on a quand même un affichage quand on rentre aucun paramètre
     @GetMapping("fire")
     public FireAndFireStationNumberDTO getPersonsAndAddressesCoveredByFireStation(@RequestParam(value = "address", required = true) String address) {
         log.info("request to getPersonsAndAddressesCoveredByFireStation from address={} ", address);

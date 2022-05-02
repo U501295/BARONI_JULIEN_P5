@@ -59,6 +59,8 @@ public class FireStationService {
         return fireStations;
     }
 
+    //utilisation d'un iterator qui permet de modifier la liste pendant qu'on est entrain de la parcourir
+    //on se sert d'un compteur appelé flagOfRemoval pour déterminer si la donné est matchée ou non et lancer une exception le cas échant
     public List<FireStation> modifyMapping(List<FireStation> fireStations, String address, Integer station, FireStation fireStation) {
 
         List<FireStation> output = new ArrayList<>();
